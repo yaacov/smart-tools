@@ -41,7 +41,7 @@ To get started with SMART Tools, you'll first need to install them. Once install
 
   - smart-vm: This is a virtual machine that lets you run your machine code programs. It simulates the behavior of the SMART computer architecture, allowing you to execute and debug your programs in a controlled environment.
 
-For a deeper understanding of what each tool does and the concepts behind them, please refer to the [information guide](README.INFO.md).
+For a deeper understanding of what each tool does and the concepts behind them, please refer to the [README.INFO.md](README.INFO.md).
 
 
 ### Installation
