@@ -63,6 +63,12 @@ cd smart-tools
 npm install
 ```
 
+  - Create links in nodejs path, this will make the smart tools available on the cli:
+
+```bash
+npm link
+```
+
 #### Assembling a Program
 
 To assemble a .asm file into a .obj binary:
