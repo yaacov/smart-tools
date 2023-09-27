@@ -63,7 +63,7 @@ cd smart-tools
 npm install
 ```
 
-  - Create links in nodejs path, this will make the smart tools available on the cli:
+  - Create links in nodejs path, this will make the smart tools available as cli tools:
 
 ```bash
 npm link
