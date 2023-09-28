@@ -35,6 +35,6 @@ END:
 
 NUM1:   DATA 0x05  ; 5 in decimal
 NUM2:   DATA 0x03  ; 3 in decimal
-RESULT:DATA 0x00
+RESULT: DATA 0x00
 CARRY:  DATA 0x00
 SUM:    DATA 0x00
