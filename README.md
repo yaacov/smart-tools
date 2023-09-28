@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/smart-tools.svg)](https://badge.fury.io/js/smart=tools)
+[![npm version](https://badge.fury.io/js/smart-tools.svg)](https://badge.fury.io/js/smart-tools)
 
 # SMART Tools
 
