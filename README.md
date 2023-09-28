@@ -80,10 +80,17 @@ cd smart-tools
 npm install
 ```
 
-  - Create links in nodejs path, this will make the smart tools available as cli tools:
+  - Run the code
 
 ```bash
-npm link
+# Run the tools from source
+node src/smart-vm.mjs
+
+# build the contaier image
+podman build -t quay.io/yaacov/smart-tools .
+
+# Run the container image
+podman run -it quay.io/yaacov/smart-tools
 ```
 
 #### Assembling a Program
