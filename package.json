@@ -4,8 +4,8 @@
   "description": "S.M.A.R.T. (Simplified Memory & Assembly Reference Tool) - A set of tools designed for educational purposes to provide a clear understanding of assembly language and virtual machine operations.",
   "main": "smart-vm.js",
   "scripts": {
-    "lint": "eslint src/",
-    "lint:fix": "eslint src/ --fix"
+    "lint": "eslint src/*",
+    "lint:fix": "eslint src/* --fix"
   },
   "files": [ "src/" ],
   "bin": {
