@@ -49,6 +49,20 @@ For a deeper understanding of what each tool does and the concepts behind them, 
 
 ### Installation
 
+#### Running container
+
+```bash
+podman run -it quay.io/yaacov/smart-tools
+```
+
+#### Installing using npm
+
+```bash
+npm install smart-tools
+```
+
+#### From source
+
 Before you begin, ensure you have **Node.js** and **npm** (Node Package Manager) installed on your system. If not, you can download and install them from [Node.js official website](https://nodejs.org/).
 
 Once you have Node.js and npm set up:
