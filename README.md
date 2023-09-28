@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/smart-tools.svg)](https://badge.fury.io/js/smart=tools)
+
 # SMART Tools
 
 SMART (Simple Machine Assembly and Runtime Tools) is a comprehensive suite designed to introduce students to the world of assembly language and low-level computing. The primary goal of SMART Tools is to provide a simplified yet robust environment for students to grasp the foundational concepts of assembly programming without being overwhelmed by intricate details.
