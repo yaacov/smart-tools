@@ -1,4 +1,5 @@
 [![npm version](https://badge.fury.io/js/smart-tools.svg)](https://badge.fury.io/js/smart-tools)
+[![Docker Repository on Quay](https://quay.io/repository/yaacov/smart-tools/status?token=b4594b95-b74a-43ad-86c3-d7180f9c5cd9 "Docker Repository on Quay")](https://quay.io/repository/yaacov/smart-tools)
 
 # SMART Tools
 
