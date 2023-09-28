@@ -8,7 +8,7 @@ LOOP:   JZB ENDLOOP     ; If A is zero, jump to end of loop
         STOREB NUM      ; Add current NUM to A
         ADDA NUM        
 
-        JUMPB LOOP      ; Jump back to the start of the loop using B as the counter
+        JUMP LOOP       ; Jump back to the start of the loop
 
 ENDLOOP:STOREA RESULT   ; Store the result (factorial value)
 

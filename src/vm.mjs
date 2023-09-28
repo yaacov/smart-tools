@@ -41,10 +41,9 @@ class VM {
       [opcodes.SHLB]: () => { this.registerB = (this.registerB << this.fetchOperand()) & 0xff; },
       [opcodes.SHRA]: () => this.registerA >>= this.fetchOperand(),
       [opcodes.SHRB]: () => this.registerB >>= this.fetchOperand(),
-      [opcodes.JUMPA]: () => { this.pc++; if (this.registerA !== 0) { this.pc = this.memory[this.pc]; jumpFlag = true; } },
-      [opcodes.JUMPB]: () => { this.pc++; if (this.registerB !== 0) { this.pc = this.memory[this.pc]; jumpFlag = true; } },
-      [opcodes.JZA]: () => { this.pc++; if (this.registerA === 0) { this.pc = this.memory[this.pc]; jumpFlag = true; } },
-      [opcodes.JZB]: () => { this.pc++; if (this.registerB === 0) { this.pc = this.memory[this.pc]; jumpFlag = true; } },
+      [opcodes.JUMP]: () => { const address = this.fetchOperand(); this.pc = address; jumpFlag = true; },
+      [opcodes.JZA]: () => { const address = this.fetchOperand(); if (this.registerA === 0) { this.pc = address; jumpFlag = true; } },
+      [opcodes.JZB]: () => { const address = this.fetchOperand(); if (this.registerB === 0) { this.pc = address; jumpFlag = true; } },
       [opcodes.ADDA]: () => { this.registerA = (this.registerA + this.memory[this.fetchOperand()]) & 0xff; },
       [opcodes.ADDB]: () => { this.registerB = (this.registerB + this.memory[this.fetchOperand()]) & 0xff; },
       [opcodes.END]: () => false,
@@ -68,6 +67,7 @@ class VM {
       this.pc++;
     }
 
+    // Memory gurd
     if (this.pc >= this.memory.length) {
       this.pc = 0;
     }

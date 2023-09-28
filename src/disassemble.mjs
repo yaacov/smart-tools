@@ -72,8 +72,7 @@ export function disassemble(memory) {
           }
           asmOperand = labels[operandValue];
           break;
-        case 'JUMPA':
-        case 'JUMPB':
+        case 'JUMP':
         case 'JZA':
         case 'JZB':
           operandValue = memory[++address];

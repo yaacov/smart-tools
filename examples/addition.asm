@@ -25,7 +25,7 @@ LOOP:
         LOADA CARRY
         JZA END        ; If there's no carry, end the program
 
-        JUMPA LOOP     ; Otherwise, continue the loop
+        JUMP LOOP     ; Otherwise, continue the loop
 
 END:    
         LOADA SUM

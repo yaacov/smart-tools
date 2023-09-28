@@ -38,8 +38,7 @@ Here's a list of available opcodes in the SMART Assembly language:
 - `SHLB <value>`: Shift the bits in register B to the left by `<value>` positions.
 - `SHRA <value>`: Shift the bits in register A to the right by `<value>` positions.
 - `SHRB <value>`: Shift the bits in register B to the right by `<value>` positions.
-- `JUMPA <label>`: Jump to the address specified by `<label>` using the value in register A.
-- `JUMPB <label>`: Jump to the address specified by `<label>` using the value in register B.
+- `JUMP <label>`: Jump to the address specified by `<label>`.
 - `JZA <label>`: Jump to the address specified by `<label>` if register A is zero.
 - `JZB <label>`: Jump to the address specified by `<label>` if register B is zero.
 - `END`: End the program execution.
