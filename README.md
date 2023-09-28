@@ -5,6 +5,8 @@
 
 SMART (Simple Machine Assembly and Runtime Tools) is a comprehensive suite designed to introduce students to the world of assembly language and low-level computing. The primary goal of SMART Tools is to provide a simplified yet robust environment for students to grasp the foundational concepts of assembly programming without being overwhelmed by intricate details.
 
+[![asciicast](https://asciinema.org/a/610837.svg)](https://asciinema.org/a/610837)
+
 ## Why SMART Tools?
 
 1. **Simplicity**: SMART is designed to be straightforward, making it easier for beginners to understand the core concepts without getting lost in the complexities of real-world assembly languages.
