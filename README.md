@@ -5,7 +5,14 @@
 
 SMART (Simple Machine Assembly and Runtime Tools) is a comprehensive suite designed to introduce students to the world of assembly language and low-level computing. The primary goal of SMART Tools is to provide a simplified yet robust environment for students to grasp the foundational concepts of assembly programming without being overwhelmed by intricate details.
 
-[![asciicast](https://asciinema.org/a/610837.svg)](https://asciinema.org/a/610837)
+
+## Web-based User Interface
+
+You can try it out using the web-based user interface: [S.M.A.R.T tools web-based user interface](https://yaacov.github.io/smart-tools/).
+
+<p align="center">
+<img width="400" src="https://raw.githubusercontent.com/yaacov/smart-tools/main/SMART-web-ui.png" alt="Smart web UI">
+</p>
 
 ## Why SMART Tools?
 
@@ -35,6 +42,8 @@ RESULT: DATA 0x00
 ```
 
 ## Running the Tools
+
+[![asciicast](https://asciinema.org/a/610837.svg)](https://asciinema.org/a/610837)
 
 To get started with SMART Tools, you'll first need to install them. Once installed, you can use the command-line interfaces to assemble, disassemble, and run your programs.
 
