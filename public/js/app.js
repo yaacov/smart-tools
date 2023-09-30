@@ -186,7 +186,7 @@ function app() {
 
   async function handleExamplesTableClick(event) {
     // Construct the URL to the file
-    const fileUrl = `/js/examples/${event.detail.value.replace(/\.asm$/, '.js')}`;
+    const fileUrl = `./examples/${event.detail.value}`;
 
     try {
       const response = await fetch(fileUrl);
