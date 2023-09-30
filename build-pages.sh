@@ -11,4 +11,4 @@ mkdir -p ./pages/js/src
 cp -R ./src/* ./pages/js/src/
 
 mkdir -p ./pages/js/examples
-cp -R ./examples/* ./pages/js/examples/
+for file in ./examples/*; do cp "$file" "./pages/js/examples/$(basename "$file").js"; done
