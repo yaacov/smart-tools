@@ -1,5 +1,7 @@
 import opcodes from './opcodes.mjs';
-import { findKeyByValue, formatAddress } from './utils.mjs';
+import {
+  findKeyByValue, formatAddress, formatHexByte, formatBinary,
+} from './utils.mjs';
 
 /**
  * Removes comments from a line of assembly code.
@@ -103,8 +105,13 @@ function processInstruction(instruction, operands, memory, labels, memoryMapping
     });
   } else if (instruction) {
     // Note: a valid line with a lable and no opCode will have an instruction == undefined.
-    console.error(`Error: Unknown opCode (${instruction}) on address ${formatAddress(memory.length)}`);
-    process.exit(1);
+    const formattedInstructionHex = formatHexByte(instruction);
+    const formattedInstructionBinary = formatBinary(instruction, 8); // Assuming 8 bits for the instruction
+    const formattedAddressHex = formatAddress(memory.length);
+    const formattedAddressDecimal = memory.length;
+
+    const errorMessage = `Invalid instruction [${formattedInstructionHex} | ${formattedInstructionBinary}] at address ${formattedAddressHex} (${formattedAddressDecimal})!`;
+    throw new Error(errorMessage);
   }
 }
 
