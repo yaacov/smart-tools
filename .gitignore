@@ -86,3 +86,5 @@ dist/
 # OS generated
 .DS_Store
 Thumbs.db
+
+pages

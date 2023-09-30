@@ -1,0 +1,47 @@
+.body-style {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: wheat;
+    background-color: #282c34;
+}
+
+.title-text {
+    color: #FFFFFF;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: normal;
+}
+
+.group-margin {
+    margin: 0 30px;
+}
+
+.main-container {
+    display: flex;
+    font-weight: normal;
+}
+
+.editor-column {
+    margin-top: 20px;;
+    margin-left: 15px;
+    width: calc( 100% - 300px );
+    height: 3000px;
+}
+
+.help-column {
+    padding-left: 15px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.compile-button {
+    font-weight: bold;
+}
+
+.hex {
+    color: #fffdfd;
+}

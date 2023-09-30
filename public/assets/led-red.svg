@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="83"
+   height="84"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="led-red.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="5.825"
+     inkscape:cx="100"
+     inkscape:cy="100"
+     inkscape:window-width="3440"
+     inkscape:window-height="1371"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <!-- Gray panel -->
+  <!-- Green LED -->
+  <circle
+     cx="41.337555"
+     cy="41.833302"
+     r="40"
+     fill="#00ff00"
+     id="circle1"
+     style="fill:#ff2a2a" />
+  <circle
+     cx="41.337555"
+     cy="41.833302"
+     r="35"
+     fill="#00aa00"
+     id="circle2"
+     style="fill:#aa0000" />
+  <circle
+     cx="41.337555"
+     cy="41.833302"
+     r="30"
+     fill="#00ff00"
+     id="circle3"
+     style="fill:#ff2a2a" />
+  <!-- LED reflection -->
+  <circle
+     cx="26.337557"
+     cy="26.833302"
+     r="10"
+     fill="rgba(255, 255, 255, 0.7)"
+     id="circle4" />
+</svg>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.M.A.R.T web</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body class="body-style">
+    <vm-modal id="vmModal"></vm-modal>
+
+    <card-container>
+
+        <card-component
+                class="input-card"
+                title="S.M.A.R.T Control and Inputs" width="5" height="2" id="input-card" 
+                href="https://github.com/yaacov/smart-tools">
+            <div class="flex-container">
+                <div class="group-margin">
+                    <p class="title-text">Clear Inputs</p>
+                    <led-switch layout="horizontal" autoreset="true" value="false" color="green" class="reset-inputs" id="reset-inputs-switch"></led-switch>
+                </div>
+            
+                <div class="group-margin">
+                    <p class="title-text">Reset Machine</p>
+                    <led-switch layout="horizontal" autoreset="true" value="false" color="red" class="reset-machine" id="reset-machine-switch"></led-switch>
+                </div>
+            </div>
+        
+            <div class="flex-container">             
+                <div class="group-margin">
+                    <p class="title-text">Memory Address</p>
+                    <led-switch-array width="8" value="0" class="address-set" id="address-set-array"></led-switch-array>
+                </div>
+        
+                <div class="group-margin">
+                    <p class="title-text">Memory Value</p>
+                    <led-switch-array width="8" value="0" class="memory-set" id="memory-set-array"></led-switch-array>
+                </div>
+                
+                <div class="group-margin">
+                    <p class="title-text">Set</p>
+                    <led-switch layout="horizontal" autoreset="true" value="false" color="red" class="memory-send" id="memory-set-switch" label="Set memory"></led-switch>
+                    <p>Address: <span id="address-value" class="hex">0x00</span></p>
+                    <p>Value: <span id="memory-value" class="hex">0x00</span></p>
+                </div>
+            </div>
+        </card-component>
+        
+        <card-component
+                class="vm-card" title="S.M.A.R.T Virtual Machine" width="3" height="21" id="vm-card"
+                href="https://github.com/yaacov/smart-tools"
+                hreflabel="https://github.com/yaacov/smart-tools">
+            <div class="flex-container">
+                <div class="group-margin">
+                    <led-switch layout="horizontal" label="Run" value="false" color="green" class="run-program" id="run-program-switch"></led-switch>
+                </div>
+
+                <div class="group-margin">
+                    <led-switch layout="horizontal" label="Step" autoreset="true" value="false" color="green" class="step" id="debug-step-switch"></led-switch>
+                </div>
+
+                <div class="group-margin">
+                    <led-switch layout="horizontal" label="Reset PC" autoreset="true" value="false" color="green" class="reset-pc" id="reset-pc-switch"></led-switch>
+                </div>
+            </div>
+            
+            <p class="title-text">Registers</p>
+            <led-register-table rega="0" regb="0" id="registers-table"></led-register-table>
+        
+            <p class="title-text">Memory</p>
+            <led-table class="ledTable" color="red" id="memory-table"></led-table>
+        </card-component>
+        
+        <card-component class="editor-card" title="S.M.A.R.T Assembly Code Editor" width="5" height="19" id="editor-card" href="https://github.com/yaacov/smart-tools">
+            <div class="main-container">
+                <div class="editor-column">
+                    <code-editor theme="new" id="code-editor"></code-editor>
+                </div>
+                <div class="help-column">
+        
+                    <div class="compile-button">
+                        <p>Compile Program</p>
+                        <led-switch layout="horizontal" autoreset="true" value="false" color="red" class="compile" id="compile-switch"></led-switch>
+                    </div>
+                    
+                    <examples-table id="examples-table"></examples-table>
+                    <op-codes-table id="op-codes-table"></op-codes-table>
+                </div>
+            </div>
+        </card-component>     
+
+    </card-container>
+
+<script type="module" src="js/components/index.js"></script>
+<script type="module" src="js/app.js"></script>
+</body>
