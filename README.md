@@ -8,7 +8,7 @@ SMART (Simple Machine Assembly and Runtime Tools) is a comprehensive suite desig
 
 ## Web-based User Interface
 
-You can try it out using the web-based user interface: [S.M.A.R.T tools web-based user interface](https://yaacov.github.io/smart-tools/).
+You can try it out using the [web-based user interface](https://yaacov.github.io/smart-tools/).
 
 <p align="center">
 <img width="400" src="https://raw.githubusercontent.com/yaacov/smart-tools/main/SMART-web-ui.png" alt="Smart web UI">
