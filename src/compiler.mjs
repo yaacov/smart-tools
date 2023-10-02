@@ -1,7 +1,6 @@
-import opcodes from './opcodes.mjs';
-import {
-  findKeyByValue, formatAddress, formatHexByte, formatBinary,
-} from './utils.mjs';
+import { opcodes, opcodesParams } from './opcodes.mjs';
+import { findKeyByValue } from './utils.mjs';
+import { throwFormattedError } from './debug.mjs';
 
 /**
  * Removes comments from a line of assembly code.
@@ -62,7 +61,7 @@ function processLabel(instruction, operands, labels, address) {
 
   if (instruction === 'DATA') {
     address += operands.length; // For each data value
-  } else if (opcodes[instruction] !== undefined) {
+  } else if (instruction in opcodes) {
     address += 1; // For the opcode
     address += operands.length; // For each operand
   }
@@ -80,11 +79,12 @@ function processLabel(instruction, operands, labels, address) {
 function processInstruction(instruction, operands, memory, labels, memoryMapping) {
   const addToMemory = (value, type, asmOpcode = null, asmOperand = null) => {
     const address = memory.length;
+    const valueInt = parseInt(value, 10);
 
-    memory.push(value);
+    memory.push(valueInt);
     memoryMapping.push({
       address,
-      value: parseInt(value, 10),
+      value: valueInt,
       type,
       asmOpcode,
       asmOperand,
@@ -96,8 +96,12 @@ function processInstruction(instruction, operands, memory, labels, memoryMapping
     operands.forEach((operand) => {
       addToMemory(parseValue(operand), 'data', null, operand);
     });
-  } else if (opcodes[instruction] !== undefined) {
+  } else if (instruction in opcodes) {
     addToMemory(opcodes[instruction], 'opcode', instruction);
+
+    if (operands.length !== opcodesParams[opcodes[instruction]]) {
+      throwFormattedError('Wrong number of operands', instruction, memory.length);
+    }
 
     operands.forEach((operand) => {
       const operandValue = findKeyByValue(labels, operand) || parseValue(operand);
@@ -105,13 +109,7 @@ function processInstruction(instruction, operands, memory, labels, memoryMapping
     });
   } else if (instruction) {
     // Note: a valid line with a lable and no opCode will have an instruction == undefined.
-    const formattedInstructionHex = formatHexByte(instruction);
-    const formattedInstructionBinary = formatBinary(instruction, 8); // Assuming 8 bits for the instruction
-    const formattedAddressHex = formatAddress(memory.length);
-    const formattedAddressDecimal = memory.length;
-
-    const errorMessage = `Invalid instruction [${formattedInstructionHex} | ${formattedInstructionBinary}] at address ${formattedAddressHex} (${formattedAddressDecimal})!`;
-    throw new Error(errorMessage);
+    throwFormattedError('Invalid instruction', instruction, memory.length);
   }
 }
 

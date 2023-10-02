@@ -20,6 +20,7 @@ SMART Assembly is a simple assembly language designed for educational purposes. 
 
 Here's a list of available opcodes in the SMART Assembly language:
 
+- `NOP`: No operation, move the program counter.
 - `LOADA <label>`: Load the value from the memory location specified by `<label>` into register A.
 - `LOADB <label>`: Load the value from the memory location specified by `<label>` into register B.
 - `STOREA <label>`: Store the value from register A into the memory location specified by `<label>`.

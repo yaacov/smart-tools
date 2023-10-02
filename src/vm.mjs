@@ -1,7 +1,5 @@
-import opcodes from './opcodes.mjs';
-import {
-  formatHexByte, formatBinary, formatAddress,
-} from './utils.mjs';
+import { opcodes, opcodesParams } from './opcodes.mjs';
+import { throwFormattedError } from './debug.mjs';
 
 class VM {
   constructor(memorySize = 256) {
@@ -12,8 +10,7 @@ class VM {
   }
 
   fetchOperand() {
-    this.pc++;
-    return this.memory[this.pc];
+    return this.memory[this.pc + 1];
   }
 
   /**
@@ -23,8 +20,10 @@ class VM {
    */
   execute() {
     let jumpFlag = false;
+    const instruction = this.memory[this.pc];
 
     const handlers = {
+      [opcodes.NOP]: () => true,
       [opcodes.LOADA]: () => this.registerA = this.memory[this.fetchOperand()],
       [opcodes.LOADB]: () => this.registerB = this.memory[this.fetchOperand()],
       [opcodes.STOREA]: () => this.memory[this.fetchOperand()] = this.registerA,
@@ -49,22 +48,15 @@ class VM {
       [opcodes.END]: () => false,
     };
 
-    const instruction = this.memory[this.pc];
-    if (handlers[instruction]) {
+    if (instruction in handlers) {
       handlers[instruction]();
     } else {
-      const formattedInstructionHex = formatHexByte(instruction);
-      const formattedInstructionBinary = formatBinary(instruction, 8); // Assuming 8 bits for the instruction
-      const formattedAddressHex = formatAddress(this.pc);
-      const formattedAddressDecimal = this.pc;
-
-      const errorMessage = `Invalid instruction [${formattedInstructionHex} | ${formattedInstructionBinary}] at address ${formattedAddressHex} (${formattedAddressDecimal})!`;
-      throw new Error(errorMessage);
+      throwFormattedError('Invalid instruction', instruction, this.pc);
     }
 
     // Dont incriment the counter on jumps
     if (!jumpFlag) {
-      this.pc++;
+      this.pc += (1 + opcodesParams[instruction]);
     }
 
     // Memory gurd

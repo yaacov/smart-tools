@@ -1,4 +1,4 @@
-import opcodes from './opcodes.mjs';
+import { opcodes } from './opcodes.mjs';
 import { findKeyByValue } from './utils.mjs';
 
 /**
@@ -58,8 +58,6 @@ export function disassemble(memory) {
         case 'LOADB':
         case 'STOREA':
         case 'STOREB':
-        case 'ORA':
-        case 'ORB':
         case 'ANDA':
         case 'ANDB':
         case 'XORA':
@@ -85,6 +83,11 @@ export function disassemble(memory) {
         case 'SHLB':
           operandValue = memory[++address];
           asmOperand = operandValue.toString(); // Directly use the integer value for shifts
+          break;
+        case 'ORA':
+        case 'ORB':
+        case 'NOP':
+          // obCodes with no operands
           break;
         case 'END':
           progEnd = true;
