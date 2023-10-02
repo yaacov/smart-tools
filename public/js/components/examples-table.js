@@ -7,46 +7,61 @@ class ExampleTable extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = html`
-        <style>
-          table {
-            border-collapse: collapse;
-            width: 100%;
-          }
-          th, td {
-            border: 0;
-            text-align: left;
-            padding: 4px;
-          }
-          td {
-            cursor: pointer;
-          }
-          td:hover {
-            color: #f0f0f0;
-          }
-        </style>
-        <table>
-          <tr>
-            <th>Examples</th>
-          </tr>
-        </table>
-      `;
+      <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        th, td {
+          border: 0;
+          text-align: left;
+          padding: 4px;
+        }
+        td {
+          cursor: pointer;
+        }
+        td:hover {
+          color: #f0f0f0;
+        }
+      </style>
+      <table>
+        <tr>
+          <th>Examples</th>
+        </tr>
+      </table>
+    `;
   }
 
   connectedCallback() {
+    this.fetchExamplesList();
+  }
+
+  async fetchExamplesList() {
+    const path = this.getAttribute('path');
+    if (!path) {
+      console.error('Path attribute is missing');
+      return;
+    }
+
+    try {
+      const response = await fetch(path);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const text = await response.text();
+      const examples = text.trim().split('\n');
+      this.renderTable(examples);
+    } catch (error) {
+      console.error('Error fetching the examples list:', error);
+    }
+  }
+
+  renderTable(examples) {
     const table = this.shadowRoot.querySelector('table');
-    const examples = [
-      'addition.asm',
-      'factorial.asm',
-      'bitwise_not.asm',
-      'divide_by_2.asm',
-      'multiply_by_2.asm',
-    ];
 
     for (let i in examples) {
       const row = document.createElement('tr');
-      row.innerHTML = `
-          <td class="example">${examples[i]}</td>
-        `;
+      row.innerHTML = `<td class="example">${examples[i]}</td>`;
       row.addEventListener('click', () => this.handleRowClick(examples[i]));
       table.appendChild(row);
     }
