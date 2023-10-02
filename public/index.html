@@ -49,19 +49,27 @@
         </card-component>
         
         <card-component
-                class="vm-card" title="S.M.A.R.T Virtual Machine" width="3" height="17" id="vm-card"
+                class="vm-card" title="S.M.A.R.T Virtual Machine" width="3" height="28" id="vm-card"
                 href="https://github.com/yaacov/smart-tools">
             <div class="flex-container">
                 <div class="group-margin">
-                    <led-switch layout="horizontal" label="Run" value="false" color="green" class="run-program" id="run-program-switch"></led-switch>
+                    <p class="title-text">Run</p>
+                    <led-switch layout="horizontal" value="false" color="green" class="run-program" id="run-program-switch"></led-switch>
                 </div>
 
                 <div class="group-margin">
-                    <led-switch layout="horizontal" label="Step" autoreset="true" value="false" color="green" class="step" id="debug-step-switch"></led-switch>
+                    <p class="title-text">Step</p>
+                    <led-switch layout="horizontal" autoreset="true" value="false" color="green" class="step" id="debug-step-switch"></led-switch>
                 </div>
 
                 <div class="group-margin">
-                    <led-switch layout="horizontal" label="Reset PC" autoreset="true" value="false" color="green" class="reset-pc" id="reset-pc-switch"></led-switch>
+                    <p class="title-text">Reset</p>
+                    <led-switch layout="horizontal" autoreset="true" value="false" color="red" class="reset-pc" id="reset-pc-switch"></led-switch>
+                </div>
+
+                <div class="group-margin">
+                    <p class="title-text">Turbo</p>
+                    <led-switch layout="horizontal" value="true" color="green" class="turbo" id="turbo-switch"></led-switch>
                 </div>
             </div>
             
