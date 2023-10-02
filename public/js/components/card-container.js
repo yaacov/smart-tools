@@ -12,7 +12,7 @@ class CardContainerComponent extends HTMLElement {
       this.setAttribute('gap', '10px');
     }
     if (!this.hasAttribute('height')) {
-      this.setAttribute('height', '200px');
+      this.setAttribute('height', '180px');
     }
     if (!this.hasAttribute('columns')) {
       this.setAttribute('columns', '8');

@@ -60,7 +60,6 @@ class CodeEditor extends HTMLElement {
           background-color: transparent;
           color: transparent;
           caret-color: wheat;
-          caret-width: 2px;
           outline: none;
         }
 

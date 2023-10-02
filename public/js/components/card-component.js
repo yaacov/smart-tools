@@ -13,7 +13,7 @@ class CardComponent extends HTMLElement {
   render() {
     const heightValue = parseInt(this.getAttribute('height') || '1', 10);
     const gapValue = this.parentElement.getAttribute('gap') || '10px';
-    const cardHeight = this.parentElement.getAttribute('height') || '200px';
+    const cardHeight = this.parentElement.getAttribute('height') || '180px';
     const calculatedHeight = `calc(${heightValue} * ${cardHeight} + (${heightValue - 1} * ${gapValue}))`;
     const helpLinkHref = this.getAttribute('href');
     const helpLinkLabel = this.getAttribute('hreflabel');

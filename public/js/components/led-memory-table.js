@@ -21,9 +21,10 @@ class LedMemoryTable extends HTMLElement {
     this._style.innerHTML = html`
       table {
         border-collapse: collapse;
+        font-size: 12px;
       }
       td {
-        padding: 2px 6px;
+        padding: 1px 4px;
         text-align: left;
       }
       .address {

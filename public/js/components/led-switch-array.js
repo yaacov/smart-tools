@@ -67,7 +67,7 @@ class LedSwitchArray extends HTMLElement {
         <style>
           .led-array {
             display: flex;
-            gap: 5px;
+            gap: 3px;
             padding-top: 20px;
           }
         </style>

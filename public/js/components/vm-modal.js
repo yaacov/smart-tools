@@ -34,7 +34,7 @@ class VmModal extends HTMLElement {
             display: none;
             z-index: 10;
 
-            font-size: 21px;
+            font-size: 17px;
             font-weight: normal;
           }
           .modal.open + .backdrop {

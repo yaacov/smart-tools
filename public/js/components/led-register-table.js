@@ -28,12 +28,12 @@ class LedRegisterTable extends HTMLElement {
     let tableContent = html`
             <style>
                 table {
-                  padding-left: 85px;
+                  padding-left: 65px;
+                  font-size: 12px;
                 }
                 td {
-                  padding: 2px 6px;
+                  padding: 1px 4px;
                   text-align: left;
-                  font-weight: bold;
                 }
                 .label {
                   color: #D4AF37;
