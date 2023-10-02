@@ -37,10 +37,31 @@
     gap: 30px;
 }
 
+.memory-addr {
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
+.memory-value {
+    margin-top: 5px;
+}
+
 .compile-button {
     font-weight: bold;
 }
 
 .hex {
     color: #fffdfd;
+}
+
+/* Default style: hide the element */
+.hidden-on-small {
+    display: none;
+}
+
+/* When screen width is 850 or more, show the element */
+@media (min-width: 850px) {
+    .hidden-on-small {
+        display: inherit;
+    }
 }
