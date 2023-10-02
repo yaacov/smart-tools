@@ -13,7 +13,7 @@
 
         <card-component
                 class="input-card"
-                title="S.M.A.R.T Control and Inputs" width="5" height="2" id="input-card" 
+                title="Control and Inputs" width="5" height="2" id="input-card" 
                 href="https://github.com/yaacov/smart-tools"
                 hreflabel="https://github.com/yaacov/smart-tools">
             <div class="flex-container">
@@ -28,28 +28,28 @@
                 </div>
             </div>
         
-            <div class="flex-container">             
+            <div class="flex-container">         
                 <div class="group-margin">
-                    <p class="title-text">Memory Address</p>
-                    <led-switch-array width="8" value="0" class="address-set" id="address-set-array"></led-switch-array>
+                    <p class="title-text hidden-on-small">Memory Address</p>
+                    <led-switch-array width="8" value="0" class="address-set hidden-on-small" id="address-set-array"></led-switch-array>
                 </div>
         
                 <div class="group-margin">
-                    <p class="title-text">Memory Value</p>
-                    <led-switch-array width="8" value="0" class="memory-set" id="memory-set-array"></led-switch-array>
+                    <p class="title-text hidden-on-small">Memory Value</p>
+                    <led-switch-array width="8" value="0" class="memory-set hidden-on-small" id="memory-set-array"></led-switch-array>
                 </div>
                 
                 <div class="group-margin">
-                    <p class="title-text">Set</p>
-                    <led-switch layout="horizontal" autoreset="true" value="false" color="red" class="memory-send" id="memory-set-switch" label="Set memory"></led-switch>
-                    <p>Address: <span id="address-value" class="hex">0x00</span></p>
-                    <p>Value: <span id="memory-value" class="hex">0x00</span></p>
+                    <p class="title-text hidden-on-small">Set Memory</p>
+                    <led-switch layout="horizontal" autoreset="true" value="false" color="red" class="memory-send hidden-on-small" id="memory-set-switch"></led-switch>
+                    <p class="memory-addr hidden-on-small">Addr: <span id="address-value" class="hex">0x00</span></p>
+                    <p class="memory-value hidden-on-small">Value: <span id="memory-value" class="hex">0x00</span></p>
                 </div>
             </div>
         </card-component>
         
         <card-component
-                class="vm-card" title="S.M.A.R.T Virtual Machine" width="3" height="28" id="vm-card"
+                class="vm-card" title="Virtual Machine" width="3" height="28" id="vm-card"
                 href="https://github.com/yaacov/smart-tools">
             <div class="flex-container">
                 <div class="group-margin">
@@ -69,7 +69,7 @@
 
                 <div class="group-margin">
                     <p class="title-text">Turbo</p>
-                    <led-switch layout="horizontal" value="true" color="green" class="turbo" id="turbo-switch"></led-switch>
+                    <led-switch layout="horizontal" value="false" color="green" class="turbo" id="turbo-switch"></led-switch>
                 </div>
             </div>
             
@@ -80,7 +80,7 @@
             <led-memory-table class="ledTable" color="red" id="memory-table"></led-memory-table>
         </card-component>
         
-        <card-component class="editor-card" title="S.M.A.R.T Assembly Code Editor" width="5" height="15" id="editor-card" href="https://github.com/yaacov/smart-tools">
+        <card-component class="editor-card" title="Assembly Code Editor" width="5" height="15" id="editor-card" href="https://github.com/yaacov/smart-tools">
             <div class="main-container">
                 <div class="editor-column">
                     <code-editor theme="new" id="code-editor"></code-editor>

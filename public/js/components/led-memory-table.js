@@ -36,6 +36,14 @@ class LedMemoryTable extends HTMLElement {
       .decimal {
         color: #D3D3D3;
       }
+      .hidden-on-small {
+        display: none;
+      }
+      @media (min-width: 850px) {
+        .hidden-on-small {
+              display: table-cell;
+        }
+      }
     `;
     this.shadowRoot.appendChild(this._style);
   }
@@ -123,9 +131,9 @@ class LedMemoryTable extends HTMLElement {
       <td><led-array color="red" width="1" value="${item.indicator ? '1' : '0'}"></led-array>
       <td><led-array color="green" width="8" value="${item.value}"></led-array></td>
       <td>${valueHex}</td>
-      <td class="decimal">${valueDecimal}</td>
-      <td class="label">${item.label || ''}</td>
-      ${item.opCode ? `<td>${item.opCode}</td>` : `<td class="decimal">${item.oprand || ''}</td>`}
+      <td class="decimal hidden-on-small">${valueDecimal}</td>
+      <td class="label hidden-on-small">${item.label || ''}</td>
+      ${item.opCode ? `<td class="hidden-on-small">${item.opCode}</td>` : `<td class="decimal hidden-on-small">${item.oprand || ''}</td>`}
     `;
   }
 }
