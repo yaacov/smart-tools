@@ -2,7 +2,6 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 import VM from './src/vm.mjs';
-import { disassemble } from './src/disassemble.mjs';
 import compile from './src/compiler.mjs';
 
 // Virtual machine
@@ -13,7 +12,7 @@ const runningStepTimeMs = 50;
 let runningSteps = 0;
 let runningInterval;
 
-let [memoryMapping] = disassemble(vm.memory);
+let [memoryMapping] = vm.memory.map((i) => ({ address: i, value: 0 }));
 
 // Settings card components
 const resetInputsSwitch = document.querySelector('#reset-inputs-switch');
@@ -86,6 +85,7 @@ function app() {
     vm.registerA = 0;
     vm.registerB = 0;
     vm.memory = new Array(memorySize).fill(0);
+    memoryMapping = vm.memory.map((i) => ({ address: i, value: 0 }));
 
     updateVmView();
 
@@ -212,12 +212,6 @@ function app() {
     console.log(`opCodesTable, value: ${event.detail.value}`);
   }
 
-  function handleMemoryTableClick(event) {
-    memorySetArray.value = event.detail.value;
-
-    console.log(`memoryTable, value: ${event.detail.value}`);
-  }
-
   // Event Listeners
   runProgramSwitch.addEventListener('valueChange', handleRunProgramSwitchValueChange);
   resetInputsSwitch.addEventListener('valueChange', handleResetInputsSwitchValueChange);
@@ -230,7 +224,6 @@ function app() {
   compileSwitch.addEventListener('valueChange', handleCompileSwitchValueChange);
   examplesTable.addEventListener('tableClick', handleExamplesTableClick);
   opCodesTable.addEventListener('tableClick', handleOpCodesTableClick);
-  memoryTable.addEventListener('tableClick', handleMemoryTableClick);
 
   // Updare the virtual machine registers and memory tables
   updateVmView();
