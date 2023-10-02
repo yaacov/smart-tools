@@ -36,7 +36,7 @@ class LedArray extends HTMLElement {
       this.shadowRoot.appendChild(ledContainer);
       ledContainer.style.display = 'flex';
       ledContainer.style.alignItems = 'center';
-      ledContainer.style.gap = '5px';
+      ledContainer.style.gap = '3px';
     }
 
     // Update or create led-indicator elements

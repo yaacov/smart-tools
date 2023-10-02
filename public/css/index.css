@@ -1,6 +1,5 @@
 .body-style {
     font-family: Arial, sans-serif;
-    font-weight: bold;
     color: wheat;
     background-color: #282c34;
 }
@@ -15,7 +14,7 @@
 }
 
 .group-margin {
-    margin: 0 30px;
+    margin: 0 10px;
 }
 
 .main-container {
@@ -27,7 +26,7 @@
     margin-top: 20px;;
     margin-left: 15px;
     width: calc( 100% - 300px );
-    height: 3000px;
+    height: 2750px;
 }
 
 .help-column {

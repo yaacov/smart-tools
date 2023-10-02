@@ -6,7 +6,7 @@ import { disassemble } from './src/disassemble.mjs';
 import compile from './src/compiler.mjs';
 
 // Virtual machine
-const memorySize = 256;
+const memorySize = 154;
 const vm = new VM(memorySize);
 const runningStepTimeMs = 50;
 
@@ -44,7 +44,7 @@ const modal = document.getElementById('vmModal');
 // Helper methods
 function updateVmView() {
   let data = [];
-  for (let i = 0; i < 130; i++) {
+  for (let i = 0; i < memorySize; i++) {
     const mapping = i < memoryMapping.length ? memoryMapping[i] : undefined;
 
     data.push({
@@ -237,6 +237,7 @@ function app() {
 
   // Init editor with insperational quate
   codeEditor.code = '; your code here';
+  resetMachineSwitch.value = 'true';
   resetInputsSwitch.value = 'true';
 }
 

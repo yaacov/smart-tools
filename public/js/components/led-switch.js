@@ -84,21 +84,21 @@ class LedSwitch extends HTMLElement {
             align-items: center;
             justify-content: center;
             flex-direction: ${layout === 'vertical' ? 'column' : 'row'};
-            height: 80px;
+            height: 60px;
           } 
           img {
             display: block;
             cursor: pointer;
           }
           .led {
-            width: 27px;
+            width: 17px;
             height: auto;
           }
           .switch {
             padding-top: ${layout === 'vertical' ? '15px' : '0'};
             padding-left: ${layout === 'vertical' ? '0' : '5px'};
             width: auto;
-            height: 80px;
+            height: 60px;
           }
           .label {
             padding-left: 10px;

@@ -40,7 +40,7 @@ class LedIndicator extends HTMLElement {
             }
             img {
               display: block;
-              width: 27px;
+              width: 17px;
               height: auto;
             }
           </style>
