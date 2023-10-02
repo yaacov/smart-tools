@@ -28,7 +28,7 @@ class LedRegisterTable extends HTMLElement {
     let tableContent = html`
             <style>
                 table {
-                  padding-left: 65px;
+                  padding-left: 16px;
                   font-size: 12px;
                 }
                 td {
@@ -44,16 +44,16 @@ class LedRegisterTable extends HTMLElement {
             </style>
             <table>
               <tr>
+                <td class="label">RegA</td>
                 <td><led-array color="red" width="8" value="${regA}"></led-array></td>
                 <td>0x${regA.toString(16).toUpperCase().padStart(2, '0')}</td>
                 <td class="decimal">${regA.toString(10).padStart(3, '0')}</td>
-                <td class="label">Reg-A</td>
               </tr>
               <tr>
+                <td class="label">RegB</td>
                 <td><led-array color="red" width="8" value="${regB}"></led-array></td>
                 <td>0x${regB.toString(16).toUpperCase().padStart(2, '0')}</td>
                 <td class="decimal">${regB.toString(10).padStart(3, '0')}</td>
-                <td class="label">Reg-A</td>
               </tr>
             </table>
         `;
