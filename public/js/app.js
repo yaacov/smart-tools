@@ -8,7 +8,7 @@ import compile from './src/compiler.mjs';
 // Virtual machine
 const memorySize = 256;
 const vm = new VM(memorySize);
-const runningStepTimeMs = 100;
+const runningStepTimeMs = 50;
 
 let runningSteps = 0;
 let runningInterval;
