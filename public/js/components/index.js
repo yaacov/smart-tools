@@ -5,7 +5,7 @@ import './led-indicator.js';
 import './led-switch.js';
 import './led-array.js';
 import './led-switch-array.js';
-import './led-table.js';
+import './led-memory-table.js';
 import './led-register-table.js';
 import './code-editor.js';
 import './hex-value.js';
