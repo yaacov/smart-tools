@@ -25,13 +25,13 @@
 .editor-column {
     margin-top: 20px;;
     margin-left: 15px;
-    width: calc( 100% - 300px );
+    width: calc( 100% - 200px );
     height: 2750px;
 }
 
 .help-column {
     padding-left: 15px;
-    width: 200px;
+    width: 100px;
     display: flex;
     flex-direction: column;
     gap: 30px;

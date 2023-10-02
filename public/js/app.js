@@ -5,9 +5,9 @@ import VM from './src/vm.mjs';
 import compile from './src/compiler.mjs';
 
 // Virtual machine
-const memorySize = 154;
+const memorySize = 256;
 const vm = new VM(memorySize);
-const runningStepTimeMs = 50;
+let runningStepTimeMs = 20;
 
 let runningSteps = 0;
 let runningInterval;
@@ -29,6 +29,7 @@ const debugStepSwitch = document.querySelector('#debug-step-switch');
 const runProgramSwitch = document.querySelector('#run-program-switch');
 const registersTable = document.querySelector('#registers-table');
 const resetPcSwitch = document.querySelector('#reset-pc-switch');
+const turboSwitch = document.querySelector('#turbo-switch');
 const memoryTable = document.querySelector('#memory-table');
 
 // Editor card components
@@ -43,7 +44,7 @@ const modal = document.getElementById('vmModal');
 // Helper methods
 function updateVmView() {
   let data = [];
-  for (let i = 0; i < memorySize; i++) {
+  for (let i = 0; i < vm.memory.length; i++) {
     const mapping = i < memoryMapping.length ? memoryMapping[i] : undefined;
 
     data.push({
@@ -78,6 +79,16 @@ function app() {
     updateVmView();
 
     console.log(`resetPcSwitch, value: ${event.detail.value}`);
+  }
+
+  function handleTurboSwitchValueChange(event) {
+    if (event.detail.value === 'false') {
+      runningStepTimeMs = 250;
+    } else {
+      runningStepTimeMs = 20;
+    }
+
+    console.log(`turboSwitch, value: ${event.detail.value}`);
   }
 
   function handleResetMachineSwitchValueChange(event) {
@@ -216,6 +227,7 @@ function app() {
   runProgramSwitch.addEventListener('valueChange', handleRunProgramSwitchValueChange);
   resetInputsSwitch.addEventListener('valueChange', handleResetInputsSwitchValueChange);
   resetPcSwitch.addEventListener('valueChange', handleResetPcSwitchValueChange);
+  turboSwitch.addEventListener('valueChange', handleTurboSwitchValueChange);
   resetMachineSwitch.addEventListener('valueChange', handleResetMachineSwitchValueChange);
   addressSetArray.addEventListener('valueChange', handleAddressSetArrayValueChange);
   memorySetArray.addEventListener('valueChange', handleMemorySetArrayValueChange);

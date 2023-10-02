@@ -123,9 +123,9 @@ class LedMemoryTable extends HTMLElement {
       <td><led-array color="red" width="1" value="${item.indicator ? '1' : '0'}"></led-array>
       <td><led-array color="green" width="8" value="${item.value}"></led-array></td>
       <td>${valueHex}</td>
+      <td class="decimal">${valueDecimal}</td>
       <td class="label">${item.label || ''}</td>
       ${item.opCode ? `<td>${item.opCode}</td>` : `<td class="decimal">${item.oprand || ''}</td>`}
-      <td class="decimal">${valueDecimal}</td>
     `;
   }
 }
