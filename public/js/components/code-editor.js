@@ -127,7 +127,7 @@ class CodeEditor extends HTMLElement {
   highlightText() {
     const text = this.editor.innerHTML;
     const highlightedText = text
-      .replace(/(LOADA|LOADB|STOREA|STOREB|ORA|ORB|ANDA|ANDB|XORA|XORB|NOTA|NOTB|SHLA|SHLB|SHRA|SHRB|JUMP|JZA|JZB|ADDA|ADDB|END|DATA)/g, '<span class="code">$1</span>')
+      .replace(/(NOP|LOADA|LOADB|STOREA|STOREB|ORA|ORB|ANDA|ANDB|XORA|XORB|NOTA|NOTB|SHLA|SHLB|SHRA|SHRB|JUMP|JZA|JZB|ADDA|ADDB|END|DATA)/g, '<span class="code">$1</span>')
       .replace(/(0x[\da-fA-F]{2})/g, '<span class="literal">$1</span>')
       .replace(/(^|<br>)(\s*\w+:)/g, '$1<span class="label">$2</span>')
       .replace(/(;.*?)(<br>|$)/gm, (_, p1, p2) => {

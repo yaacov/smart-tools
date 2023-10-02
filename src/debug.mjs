@@ -3,6 +3,22 @@ import {
 } from './utils.mjs';
 
 /**
+ * Formats the error message and throws an error.
+ *
+ * @param {string} message - The error message.
+ * @param {number} instruction - The instruction code.
+ * @param {number} memoryLength - The length of the memory.
+ * @throws {Error} Throws an error with a formatted message.
+ */
+export function throwFormattedError(message, instruction, memoryLength) {
+  const formattedAddressHex = formatAddress(memoryLength);
+  const formattedAddressDecimal = memoryLength;
+
+  const errorMessage = `${message} opCOde [${instruction}] at address [${formattedAddressHex} (${formattedAddressDecimal})]`;
+  throw new Error(errorMessage);
+}
+
+/**
  * Dumps the labels and their addresses to the console.
  *
  * @param {Object} labels - An object where keys are label names and values are their addresses.
