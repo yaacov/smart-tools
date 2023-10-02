@@ -21,9 +21,10 @@ class OpCodesTable extends HTMLElement {
           }
           td {
             cursor: pointer;
+            color: #fefefe;
           }
           td:hover {
-            color: #f0f0f0;
+            color: #c0c0c0;
           }
         </style>
         <table>

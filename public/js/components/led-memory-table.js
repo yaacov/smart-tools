@@ -25,13 +25,9 @@ class LedMemoryTable extends HTMLElement {
       td {
         padding: 2px 6px;
         text-align: left;
-        font-weight: bold;
       }
       .address {
-        cursor: pointer;
-      }
-      .address:hover {
-        color: #f0f0f0;
+        color: #D3D3D3;
       }
       .label {
         color: #D4AF37;

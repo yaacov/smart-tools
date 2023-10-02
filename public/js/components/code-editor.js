@@ -28,23 +28,6 @@ class CodeEditor extends HTMLElement {
   render() {
     this.shadowRoot.innerHTML = html`
       <style>
-        :host([theme="light"]) .code { color: #008800; }
-        :host([theme="light"]) .comment { color: #888888; }
-        :host([theme="light"]) .label { color: #000088; }
-        :host([theme="light"]) .literal { color: #880000; }
-        :host([theme="light"]) #container {
-          background-color: #f0f0f0;
-        }
-
-        /* Dark theme */
-        :host([theme="dark"]) .code { color: #00aa00; }
-        :host([theme="dark"]) .comment { color: #888888; }
-        :host([theme="dark"]) .label { color: #D4AF37; }
-        :host([theme="dark"]) .literal { color: #ff8080; }
-        :host([theme="dark"]) #container {
-          background-color: #1f2128;
-        }
-
         /* New theme */
         :host([theme="new"]) .comment { color: #66b366; }
         :host([theme="new"]) .label { color: #ccc966; }
@@ -70,6 +53,7 @@ class CodeEditor extends HTMLElement {
           width: 100%;
           height: 100%;
           box-sizing: border-box;
+          white-space: pre-wrap;
         }
 
         #editor {
