@@ -76,6 +76,7 @@ function app() {
 
   function handleResetPcSwitchValueChange(event) {
     vm.pc = 0;
+    vm.sp = 0;
 
     updateVmView();
   }
@@ -90,6 +91,7 @@ function app() {
 
   function handleResetMachineSwitchValueChange(event) {
     vm.pc = 0;
+    vm.sp = 0;
     vm.registerA = 0;
     vm.registerB = 0;
     vm.memory = new Array(memorySize).fill(0);
@@ -159,6 +161,7 @@ function app() {
     try {
       vm.memory = new Array(memorySize).fill(0);
       vm.pc = 0;
+      vm.sp = 0;
       vm.registerA = 0;
       vm.registerB = 0;
 
