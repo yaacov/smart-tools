@@ -25,7 +25,7 @@ export function throwFormattedError(message, instruction, memoryLength) {
  */
 export function dumpLabels(labels) {
   Object.entries(labels).forEach(([address, label]) => {
-    console.log(`${label.padStart(8)}: 0x${address.toString(16).padStart(2, '0').toUpperCase()}`);
+    console.log(`${label.padStart(8)}: 0x${parseInt(address, 10).toString(16).padStart(2, '0').toUpperCase()}`);
   });
 }
 
