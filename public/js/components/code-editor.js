@@ -28,16 +28,31 @@ class CodeEditor extends HTMLElement {
   render() {
     this.shadowRoot.innerHTML = html`
       <style>
-        /* New theme */
-        :host([theme="new"]) .comment { color: #66b366; }
-        :host([theme="new"]) .label { color: #ccc966; }
-        :host([theme="new"]) .command { color: #fffdfd; }
-        :host([theme="new"]) .literal { color: #ffffcc; }
+        /* Dark Theme Styles */
+        :host([theme="dark"]) .code { color: #abb2bf; }
+        :host([theme="dark"]) .comment { color: #98c379; }
+        :host([theme="dark"]) .label { color: #d19a66; }
+        :host([theme="dark"]) .command { color: #61afef; }
+        :host([theme="dark"]) .literal { color: #c678dd; }
+        :host([theme="dark"]) #highlighter { color: #56b6c2; }
 
-        :host([theme="new"]) #container {
-          background-color: #1c1f24;
+        :host([theme="dark"]) #container {
+          background-color: #181c24;
+        }
+        
+        /* Light Theme Styles */
+        :host([theme="light"]) .code { color: #383a42; }
+        :host([theme="light"]) .comment { color: #a0a1a7; }
+        :host([theme="light"]) .label { color: #e45649; }
+        :host([theme="light"]) .command { color: #0184bc; }
+        :host([theme="light"]) .literal { color: #c18401; }
+        :host([theme="light"]) #highlighter { color: #4078f2; }
+
+        :host([theme="light"]) #container {
+          background-color: #fafafa;
         }
 
+        /* Common Styles */
         #container {
           position: relative;
           width: 100%;
@@ -50,6 +65,7 @@ class CodeEditor extends HTMLElement {
           top: 0;
           left: 0;
           font-family: monospace;
+          font-size: 14px;
           width: 100%;
           height: 100%;
           box-sizing: border-box;
@@ -68,7 +84,7 @@ class CodeEditor extends HTMLElement {
         }
 
         pre {
-          margin: 10px;
+          padding: 10px;
         }
       </style>
 
@@ -110,7 +126,7 @@ class CodeEditor extends HTMLElement {
   highlightText() {
     const text = this.editor.innerHTML;
     const highlightedText = text
-      .replace(/(NOP|LOADA|LOADB|STOREA|STOREB|ORA|ORB|ANDA|ANDB|XORA|XORB|NOTA|NOTB|SHLA|SHLB|SHRA|SHRB|JUMP|JZA|JZB|ADDA|ADDB|END|DATA)/g, '<span class="code">$1</span>')
+      .replace(/(NOP|LOADA|LOADB|STOREA|STOREB|ORA|ORB|ANDA|ANDB|XORA|XORB|NOTA|NOTB|SHLA|SHLB|SHRA|SHRB|JUMP|JZA|JZB|ADDA|ADDB|END|DATA)([^:])/g, '<span class="code">$1</span>$2')
       .replace(/(0x[\da-fA-F]{2})/g, '<span class="literal">$1</span>')
       .replace(/(^|<br>)(\s*\w+:)/g, '$1<span class="label">$2</span>')
       .replace(/(;.*?)(<br>|$)/gm, (_, p1, p2) => {

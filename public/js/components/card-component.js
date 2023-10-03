@@ -27,6 +27,7 @@ class CardComponent extends HTMLElement {
             height: ${calculatedHeight};
           }
           .card-header {
+            color: #61afef;
             padding: 10px;
             border-bottom: 1px solid #ccc;
             font-weight: bold;
@@ -38,7 +39,7 @@ class CardComponent extends HTMLElement {
           }
           .help-link {
             text-decoration: none;
-            color: #fffefe;
+            color: #c1cfcf;
           }
         </style>
         <div class="card">

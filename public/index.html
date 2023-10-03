@@ -6,8 +6,8 @@
     <title>S.M.A.R.T web</title>
     <link rel="stylesheet" href="css/index.css">
 </head>
-<body class="body-style">
-    <vm-modal id="vmModal"></vm-modal>
+<body class="body-style" theme="dark">
+    <vm-modal id="vmModal" theme="dark"></vm-modal>
 
     <card-container>
 
@@ -15,7 +15,7 @@
                 class="input-card"
                 title="Control and Inputs" width="5" height="2" id="input-card" 
                 href="https://github.com/yaacov/smart-tools"
-                hreflabel="https://github.com/yaacov/smart-tools">
+                hreflabel="On github: https://github.com/yaacov/smart-tools">
             <div class="flex-container">
                 <div class="group-margin">
                     <p class="title-text">Clear Inputs</p>
@@ -42,15 +42,13 @@
                 <div class="group-margin">
                     <p class="title-text hidden-on-small">Set Memory</p>
                     <led-switch layout="horizontal" autoreset="true" value="false" color="red" class="memory-send hidden-on-small" id="memory-set-switch"></led-switch>
-                    <p class="memory-addr hidden-on-small">Addr: <span id="address-value" class="hex">0x00</span></p>
-                    <p class="memory-value hidden-on-small">Value: <span id="memory-value" class="hex">0x00</span></p>
+                    <p class="memory-addr hidden-on-small">Addr:&nbsp;<span id="address-value" class="hex">0x00</span></p>
+                    <p class="memory-value hidden-on-small">Value:&nbsp;<span id="memory-value" class="hex">0x00</span></p>
                 </div>
             </div>
         </card-component>
         
-        <card-component
-                class="vm-card" title="Virtual Machine" width="3" height="28" id="vm-card"
-                href="https://github.com/yaacov/smart-tools">
+        <card-component class="vm-card" title="Virtual Machine" width="3" height="28" id="vm-card">
             <div class="flex-container">
                 <div class="group-margin">
                     <p class="title-text">Run</p>
@@ -69,7 +67,7 @@
 
                 <div class="group-margin">
                     <p class="title-text">Turbo</p>
-                    <led-switch layout="horizontal" value="false" color="green" class="turbo" id="turbo-switch"></led-switch>
+                    <led-switch layout="horizontal" value="false" color="red" class="turbo" id="turbo-switch"></led-switch>
                 </div>
             </div>
             
@@ -79,18 +77,19 @@
             <p class="title-text">Memory</p>
             <led-memory-table class="ledTable" color="red" id="memory-table"></led-memory-table>
         </card-component>
-        
-        <card-component class="editor-card" title="Assembly Code Editor" width="5" height="15" id="editor-card" href="https://github.com/yaacov/smart-tools">
+
+        <card-component class="editor-card" title="Assembly Code Editor" width="5" height="15" id="editor-card"
+            href="https://github.com/yaacov/smart-tools/blob/main/README.ASM.md"
+            hreflabel="Help">
             <div class="main-container">
                 <div class="editor-column">
-                    <code-editor theme="new" id="code-editor"></code-editor>
+                    <code-editor theme="dark" id="code-editor"></code-editor>
                 </div>
                 <div class="help-column">
-        
-                    <div class="compile-button">
-                        <p>Compile Program</p>
-                        <led-switch layout="horizontal" autoreset="true" value="false" color="red" class="compile" id="compile-switch"></led-switch>
-                    </div>
+
+                    <button class="button-primary" id="compile-button">Compile</button>
+                    <save-file-component id="save-file"></save-file-component>
+                    <load-file-component id="load-file"></load-file-component>
                     
                     <examples-table id="examples-table" path="./js/examples/examples.txt"></examples-table>
                     <op-codes-table id="op-codes-table"></op-codes-table>
