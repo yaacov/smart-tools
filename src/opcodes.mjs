@@ -46,7 +46,7 @@ export const opcodesParams = {
   [opcodes.NOTA]: 0,
   [opcodes.NOTB]: 0,
   [opcodes.SHLA]: 1,
-  [opcodes.SHLB]: 2,
+  [opcodes.SHLB]: 1,
   [opcodes.SHRA]: 1,
   [opcodes.SHRB]: 1,
   [opcodes.JUMP]: 1,
