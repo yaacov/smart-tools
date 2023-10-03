@@ -51,7 +51,7 @@ function updateVmView() {
 
     data.push({
       address: i,
-      indicator: vm.pc === i,
+      indicator: vm.pc === i || vm.sp === i,
       value: vm.memory[i],
       label: mapping ? mapping.label : undefined,
       opCode: mapping ? mapping.asmOpcode : undefined,
@@ -61,6 +61,7 @@ function updateVmView() {
 
   registersTable.setAttribute('rega', vm.registerA);
   registersTable.setAttribute('regb', vm.registerB);
+  registersTable.setAttribute('sp', vm.sp);
 
   memoryTable.setAttribute('data', JSON.stringify(data));
 }
@@ -228,7 +229,7 @@ function app() {
   // Init editor with insperational quate
   codeEditor.code = '; your code here\n\n'
     + '; Select one of the examples on the right,\n'
-    + '; or craft your own awesome code.\n'
+    + '; or craft your own awesome code.\n\n'
     + '; for more information:\n'
     + ';    https://github.com/yaacov/smart-tools/blob/main/README.ASM.md\n';
 }

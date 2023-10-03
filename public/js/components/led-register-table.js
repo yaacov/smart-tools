@@ -12,11 +12,11 @@ class LedRegisterTable extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['rega', 'regb'];
+    return ['rega', 'regb', 'sp'];
   }
 
   attributeChangedCallback(name) {
-    if (name === 'rega' || name === 'regb') {
+    if (name === 'rega' || name === 'regb' || name === 'sp') {
       this.render();
     }
   }
@@ -24,6 +24,7 @@ class LedRegisterTable extends HTMLElement {
   render() {
     const regA = parseInt(this.getAttribute('rega'), 10);
     const regB = parseInt(this.getAttribute('regb'), 10);
+    const SP = parseInt(this.getAttribute('sp'), 10);
 
     let tableContent = html`
             <style>
@@ -62,6 +63,11 @@ class LedRegisterTable extends HTMLElement {
                 <td><led-array color="red" width="8" value="${regB}"></led-array></td>
                 <td>0x${regB.toString(16).toUpperCase().padStart(2, '0')}</td>
                 <td class="decimal hidden-on-small">${regB.toString(10).padStart(3, '0')}</td>
+              </tr>
+              <td class="label">SP</td>
+                <td><led-array color="red" width="8" value="${SP}"></led-array></td>
+                <td>0x${SP.toString(16).toUpperCase().padStart(2, '0')}</td>
+                <td class="decimal hidden-on-small">${SP.toString(10).padStart(3, '0')}</td>
               </tr>
             </table>
         `;

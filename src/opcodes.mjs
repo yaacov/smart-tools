@@ -21,6 +21,13 @@ export const opcodes = {
   JZB: 0x13,
   ADDA: 0x14,
   ADDB: 0x15,
+  PUSH: 0x17,
+  POP: 0x18,
+  CALL: 0x19,
+  RET: 0x1A,
+  SETBP: 0x1B,
+  LOADABP: 0x1C,
+  STOREABP: 0x1D,
   END: 0xFF,
 };
 
@@ -47,6 +54,13 @@ export const opcodesParams = {
   [opcodes.JZB]: 1,
   [opcodes.ADDA]: 1,
   [opcodes.ADDB]: 1,
+  [opcodes.PUSH]: 1,
+  [opcodes.POP]: 1,
+  [opcodes.CALL]: 1,
+  [opcodes.RET]: 0,
+  [opcodes.SETBP]: 1,
+  [opcodes.LOADABP]: 1,
+  [opcodes.STOREABP]: 1,
   [opcodes.END]: 0,
 };
 

@@ -7,10 +7,23 @@ class VM {
     this.registerA = 0;
     this.registerB = 0;
     this.pc = 0;
+    this.sp = 0;
   }
 
   fetchOperand() {
     return this.memory[this.pc + 1];
+  }
+
+  pop() {
+    const value = this.memory[this.sp];
+    this.sp -= 1;
+
+    return value;
+  }
+
+  push(value) {
+    this.sp += 1;
+    this.memory[this.sp] = value;
   }
 
   /**
@@ -45,6 +58,22 @@ class VM {
       [opcodes.JZB]: () => { const address = this.fetchOperand(); if (this.registerB === 0) { this.pc = address; jumpFlag = true; } },
       [opcodes.ADDA]: () => { this.registerA = (this.registerA + this.memory[this.fetchOperand()]) & 0xff; },
       [opcodes.ADDB]: () => { this.registerB = (this.registerB + this.memory[this.fetchOperand()]) & 0xff; },
+      [opcodes.SETBP]: () => { const address = this.fetchOperand(); this.sp = address; },
+      [opcodes.PUSH]: () => { const value = this.memory[this.fetchOperand()]; this.push(value); },
+      [opcodes.POP]: () => { this.memory[this.fetchOperand()] = this.pop(); },
+      [opcodes.CALL]: () => {
+        this.push(this.pc + 2); /* +2 = code + operand */
+        const address = this.fetchOperand(); this.pc = address; jumpFlag = true;
+      },
+      [opcodes.RET]: () => { this.pc = this.pop(); jumpFlag = true; },
+      [opcodes.LOADABP]: () => {
+        const address = (this.sp - this.fetchOperand()) & 0xff;
+        this.registerA = this.memory[address];
+      },
+      [opcodes.STOREABP]: () => {
+        const address = (this.sp - this.fetchOperand()) & 0xff;
+        this.memory[address] = this.registerA;
+      },
       [opcodes.END]: () => false,
     };
 
