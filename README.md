@@ -150,3 +150,5 @@ While there are several projects aimed at teaching assembly language, SMART Tool
   - Little Man Computer (LMC): An instructional model of a computer. LMC is simple like SMART but lacks some of the features and opcodes provided by SMART.
 
 The primary difference between SMART Tools and other projects is the balance between simplicity and comprehensiveness. While SMART is designed to be beginner-friendly, it doesn't compromise on providing a complete assembly programming experience.
+
+[bitmap editor](https://yaacov.github.io/smart-tools/bitmap-editor.html)
