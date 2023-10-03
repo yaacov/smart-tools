@@ -16,6 +16,27 @@ function removeComments(line) {
 }
 
 /**
+ * Replaces instances of "STOREA [BP + <number>]" with "STOREABP <number>"
+ * and "LOADA [BP + <number>]" with "LOADABP <number>" in a given line.
+ *
+ * @param {string} line - The input line of text.
+ * @returns {string} - The modified line of text with the desired replacements.
+ */
+function replaceSyntax(line) {
+  // The regex pattern for STOREA transformation
+  const storeaPattern = /STOREA\s*\[\s*BP\s*\+\s*(\d+)\s*\]/g;
+  const storeaReplacement = 'STOREABP $1';
+  const modifiedStoreaLine = line.replace(storeaPattern, storeaReplacement);
+
+  // The regex pattern for LOADA transformation
+  const loadaPattern = /LOADA\s*\[\s*BP\s*\+\s*(\d+)\s*\]/g;
+  const loadaReplacement = 'LOADABP $1';
+  const modifiedLine = modifiedStoreaLine.replace(loadaPattern, loadaReplacement);
+
+  return modifiedLine;
+}
+
+/**
  * Ensures there's a space after a label colon in a line of assembly code.
  * @param {string} line - A line of assembly code.
  * @returns {string} - The line with ensured space after label colon.
@@ -122,6 +143,7 @@ function processInstruction(instruction, operands, memory, labels, memoryMapping
 function compile(assemblyTxt) {
   const assemblyLines = assemblyTxt.split('\n')
     .map(removeComments)
+    .map(replaceSyntax)
     .filter((line) => line.trim().length > 0)
     .map(ensureSpaceAfterLabel);
   const memory = [];

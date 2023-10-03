@@ -64,6 +64,12 @@ export function disassemble(memory) {
         case 'XORB':
         case 'ADDA':
         case 'ADDB':
+        case 'PUSH':
+        case 'POP':
+        case 'CALL':
+        case 'SETBP':
+        case 'LOADABP':
+        case 'STOREABP':
           operandValue = memory[++address];
           if (!labels[operandValue]) {
             labels[operandValue] = `DAT${labelDatIndex++}`;
@@ -87,6 +93,7 @@ export function disassemble(memory) {
         case 'ORA':
         case 'ORB':
         case 'NOP':
+        case 'RET':
           // obCodes with no operands
           break;
         case 'END':
