@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8x8 Grid</title>
+</head>
+<style>
+body {
+    background-color: #f0f0f0; /* Light gray background */
+}
+h1 {
+    margin: 20px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 21px;
+}
+</style>
+<body>
+
+<h1>Bitmap Editor</h1>
+<eight-by-eight-grid></eight-by-eight-grid>
+
+<script>
+    class EightByEightGrid extends HTMLElement {
+        constructor() {
+            super();
+            this.attachShadow({ mode: 'open' });
+            this.shadowRoot.innerHTML = `
+                <style>
+                    :host {
+                        background-color: #f0f0f0; /* Light gray background */
+                    }
+
+                    #grid {
+                        display: grid;
+                        grid-template-columns: repeat(9, 30px);
+                        grid-template-rows: repeat(8, 30px);
+                        gap: 2px;
+                        margin: 20px;
+                    }
+
+                    .tile, .hex {
+                        width: 30px;
+                        height: 30px;
+                        border: 1px solid #000;
+                        cursor: pointer;
+                        transition: background-color 0.3s; /* Smooth color transition */
+                    }
+
+                    .tile {
+                        background-color: #FFD700; /* Gold color */
+                    }
+
+                    .dark {
+                        background-color: #32CD32; /* Lime green color */
+                    }
+
+                    .hex {
+                        line-height: 30px;
+                        text-align: center;
+                        font-family: 'Courier New', monospace;
+                        font-weight: bold;
+                        margin-left: 10px;
+                        border: none; /* Remove border */
+                    }
+                </style>
+                <div id="grid"></div>
+            `;
+
+            this.gridElement = this.shadowRoot.querySelector('#grid');
+            this.tiles = [];
+            this.hexDisplays = [];
+
+            this.createTiles();
+        }
+
+        createTiles() {
+            for (let i = 0; i < 8; i++) {
+                let row = [];
+                for (let j = 0; j < 8; j++) {
+                    const tile = document.createElement('div');
+                    tile.classList.add('tile');
+                    tile.addEventListener('click', () => this.onTileClick(i, j));
+                    this.gridElement.appendChild(tile);
+                    row.push(tile);
+                }
+                this.tiles.push(row);
+
+                const hexDisplay = document.createElement('div');
+                hexDisplay.textContent = '0x00';
+                hexDisplay.classList.add('hex');
+                this.gridElement.appendChild(hexDisplay);
+                this.hexDisplays.push(hexDisplay);
+            }
+        }
+
+        onTileClick(row, col) {
+            const tile = this.tiles[row][col];
+            tile.classList.toggle('dark');
+            this.calculateHexValue(row);
+        }
+
+        calculateHexValue(row) {
+            let hexValue = 0;
+            for (let col = 0; col < 8; col++) {
+                if (this.tiles[row][col].classList.contains('dark')) {
+                    hexValue += (1 << (7 - col));
+                }
+            }
+            const hexString = `0x${hexValue.toString(16).toUpperCase().padStart(2, '0')}`;
+            console.log(`Row ${row}: ${hexString}`);
+            this.hexDisplays[row].textContent = hexString;
+        }
+    }
+
+    customElements.define('eight-by-eight-grid', EightByEightGrid);
+</script>
+
+</body>
+</html>
