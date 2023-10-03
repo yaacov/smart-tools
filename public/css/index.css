@@ -1,11 +1,15 @@
 .body-style {
     font-family: Arial, sans-serif;
-    color: wheat;
+    color: #abb2bf;
     background-color: #282c34;
 }
 
 .title-text {
-    color: #FFFFFF;
+    color: #abb2bf;
+}
+
+.hex {
+    color: #fffdfd;
 }
 
 .flex-container {
@@ -30,11 +34,13 @@
 }
 
 .help-column {
+    font-size: 14px;
     padding-left: 15px;
-    width: 100px;
+    width: 160px;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 10px;
+    padding-top: 20px;
 }
 
 .memory-addr {
@@ -50,8 +56,26 @@
     font-weight: bold;
 }
 
-.hex {
-    color: #fffdfd;
+.button-primary {
+    background-color: #505A6B;
+    border: 2px solid #707A8B;
+    color: #FFFFFF;
+    padding: 11px 22px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 17px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; /* Added box-shadow to transition */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button-primary:hover {
+    background-color: #707A8B;
+    border-color: #505A6B;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 /* Default style: hide the element */
@@ -62,6 +86,6 @@
 /* When screen width is 850 or more, show the element */
 @media (min-width: 850px) {
     .hidden-on-small {
-        display: inherit;
+        display: flex;
     }
 }

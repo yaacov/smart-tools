@@ -6,7 +6,42 @@ class LedIndicator extends HTMLElement {
     this.attachShadow({ mode: 'open' });
   }
 
+  loadImages() {
+    this.images = {
+      redOn: new Image(),
+      redOff: new Image(),
+      greenOn: new Image(),
+      greenOff: new Image(),
+    };
+
+    this.images.redOn.src = 'assets/led-red.svg';
+    this.images.redOff.src = 'assets/led-red-off.svg';
+    this.images.greenOn.src = 'assets/led-green.svg';
+    this.images.greenOff.src = 'assets/led-green-off.svg';
+  }
+
+  initializeElements() {
+    this.shadowRoot.innerHTML = html`
+      <style>
+        :host {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+        img {
+          display: block;
+          width: 17px;
+          height: auto;
+        }
+      </style>
+      <img alt="LED Indicator">
+    `;
+    this.imgElement = this.shadowRoot.querySelector('img');
+  }
+
   connectedCallback() {
+    this.loadImages();
+    this.initializeElements();
     this.render();
   }
 
@@ -24,28 +59,14 @@ class LedIndicator extends HTMLElement {
     const value = this.getAttribute('value');
     const color = this.getAttribute('color') || 'red';
 
-    let imagePath;
+    let image;
     if (color === 'red') {
-      imagePath = value === 'true' ? 'assets/led-red.svg' : 'assets/led-red-off.svg';
+      image = value === 'true' ? this.images.redOn : this.images.redOff;
     } else if (color === 'green') {
-      imagePath = value === 'true' ? 'assets/led-green.svg' : 'assets/led-green-off.svg';
+      image = value === 'true' ? this.images.greenOn : this.images.greenOff;
     }
 
-    this.shadowRoot.innerHTML = html`
-          <style>
-            :host {
-              display: inline-flex; /* Change to inline-flex */
-              align-items: center;  /* Vertically align items in the center */
-              justify-content: center; /* Horizontally align items in the center */
-            }
-            img {
-              display: block;
-              width: 17px;
-              height: auto;
-            }
-          </style>
-          <img src="${imagePath}" alt="LED Indicator">
-        `;
+    this.imgElement.src = image.src;
   }
 }
 

@@ -41,19 +41,27 @@ class LedRegisterTable extends HTMLElement {
                 .decimal {
                   color: #D3D3D3;
                 }
+                .hidden-on-small {
+                  display: none;
+                }
+                @media (min-width: 850px) {
+                  .hidden-on-small {
+                        display: table-cell;
+                  }
+                }
             </style>
             <table>
               <tr>
                 <td class="label">RegA</td>
                 <td><led-array color="red" width="8" value="${regA}"></led-array></td>
                 <td>0x${regA.toString(16).toUpperCase().padStart(2, '0')}</td>
-                <td class="decimal">${regA.toString(10).padStart(3, '0')}</td>
+                <td class="decimal hidden-on-small">${regA.toString(10).padStart(3, '0')}</td>
               </tr>
               <tr>
                 <td class="label">RegB</td>
                 <td><led-array color="red" width="8" value="${regB}"></led-array></td>
                 <td>0x${regB.toString(16).toUpperCase().padStart(2, '0')}</td>
-                <td class="decimal">${regB.toString(10).padStart(3, '0')}</td>
+                <td class="decimal hidden-on-small">${regB.toString(10).padStart(3, '0')}</td>
               </tr>
             </table>
         `;

@@ -7,8 +7,66 @@ class LedSwitch extends HTMLElement {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  connectedCallback() {
-    this.render();
+  loadImages() {
+    this.images = {
+      ledRedOn: new Image(),
+      ledRedOff: new Image(),
+      ledGreenOn: new Image(),
+      ledGreenOff: new Image(),
+      switchOn: new Image(),
+      switchOff: new Image(),
+    };
+
+    this.images.ledRedOn.src = 'assets/led-red.svg';
+    this.images.ledRedOff.src = 'assets/led-red-off.svg';
+    this.images.ledGreenOn.src = 'assets/led-green.svg';
+    this.images.ledGreenOff.src = 'assets/led-green-off.svg';
+    this.images.switchOn.src = 'assets/switch-on.svg';
+    this.images.switchOff.src = 'assets/switch-off.svg';
+  }
+
+  initializeElements() {
+    const layout = this.getAttribute('layout') || 'horizontal';
+    const flexDirection = layout === 'vertical' ? 'column' : 'row';
+    const label = this.getAttribute('label');
+
+    this.shadowRoot.innerHTML = html`
+      <style>
+        :host {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: ${flexDirection};
+          height: 60px;
+        }
+        img {
+          display: block;
+          cursor: pointer;
+        }
+        .led {
+          width: 17px;
+          height: auto;
+        }
+        .switch {
+          width: auto;
+          height: 60px;
+          padding-top: ${layout === 'vertical' ? '15px' : '0'};
+          padding-left: ${layout === 'vertical' ? '0' : '5px'};
+        }
+        .label {
+          padding-left: 10px;
+        }
+      </style>
+      <img class="led" src="${this.images.ledRedOn.src}" alt="LED Indicator" id="led">
+      <img class="switch" src="${this.images.switchOn.src}" alt="Switch" id="switch">
+      ${label ? `<Spen class="label">${label}<Spen>` : ''}    `;
+
+    this.ledElement = this.shadowRoot.querySelector('#led');
+    this.switchElement = this.shadowRoot.querySelector('#switch');
+    this.labelElement = this.shadowRoot.querySelector('#label');
+
+    this.switchElement.addEventListener('click', this.handleClick);
+    this.ledElement.addEventListener('click', this.handleClick);
   }
 
   get value() {
@@ -33,11 +91,11 @@ class LedSwitch extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['value', 'label'];
+    return ['value'];
   }
 
   attributeChangedCallback(name) {
-    if (name === 'value' || name === 'label') {
+    if (name === 'value' && this?.images !== undefined) {
       this.render();
     }
   }
@@ -62,56 +120,27 @@ class LedSwitch extends HTMLElement {
     }
   }
 
+  connectedCallback() {
+    this.loadImages();
+    this.initializeElements();
+    this.render();
+  }
+
   render() {
     const value = this.getAttribute('value');
-    const label = this.getAttribute('label');
     const color = this.getAttribute('color') || 'red';
-    const layout = this.getAttribute('layout') || 'horizontal';
 
-    let ledImagePath; let
-      switchImagePath;
+    let ledImage;
+    let switchImage;
     if (color === 'red') {
-      ledImagePath = value === 'true' ? 'assets/led-red.svg' : 'assets/led-red-off.svg';
+      ledImage = value === 'true' ? this.images.ledRedOn : this.images.ledRedOff;
     } else if (color === 'green') {
-      ledImagePath = value === 'true' ? 'assets/led-green.svg' : 'assets/led-green-off.svg';
+      ledImage = value === 'true' ? this.images.ledGreenOn : this.images.ledGreenOff;
     }
-    switchImagePath = value === 'true' ? 'assets/switch-on.svg' : 'assets/switch-off.svg';
+    switchImage = value === 'true' ? this.images.switchOn : this.images.switchOff;
 
-    this.shadowRoot.innerHTML = html`
-        <style>
-          :host {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: ${layout === 'vertical' ? 'column' : 'row'};
-            height: 60px;
-          } 
-          img {
-            display: block;
-            cursor: pointer;
-          }
-          .led {
-            width: 17px;
-            height: auto;
-          }
-          .switch {
-            padding-top: ${layout === 'vertical' ? '15px' : '0'};
-            padding-left: ${layout === 'vertical' ? '0' : '5px'};
-            width: auto;
-            height: 60px;
-          }
-          .label {
-            padding-left: 10px;
-          }
-        </style>
-        <img class="led" src="${ledImagePath}" alt="LED Indicator" id="led">
-        <img class="switch" src="${switchImagePath}" alt="Switch" id="switch">
-        ${label ? `<Spen class="label">${label}<Spen>` : ''}
-      `;
-
-    // Bind the handleClick method to the switch image elements
-    this.shadowRoot.querySelector('#switch').addEventListener('click', this.handleClick);
-    this.shadowRoot.querySelector('#led').addEventListener('click', this.handleClick);
+    this.ledElement.src = ledImage.src;
+    this.switchElement.src = switchImage.src;
   }
 }
 

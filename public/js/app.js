@@ -7,7 +7,7 @@ import compile from './src/compiler.mjs';
 // Virtual machine
 const memorySize = 256;
 const vm = new VM(memorySize);
-let runningStepTimeMs = 250;
+let runningStepTimeMs = 200;
 
 let runningSteps = 0;
 let runningInterval;
@@ -34,9 +34,11 @@ const memoryTable = document.querySelector('#memory-table');
 
 // Editor card components
 const codeEditor = document.querySelector('#code-editor');
-const compileSwitch = document.querySelector('#compile-switch');
 const examplesTable = document.querySelector('#examples-table');
 const opCodesTable = document.querySelector('#op-codes-table');
+const compileButton = document.querySelector('#compile-button');
+const loadFileComponent = document.querySelector('#load-file');
+const saveFileComponent = document.querySelector('#save-file');
 
 // Modal
 const modal = document.getElementById('vmModal');
@@ -69,26 +71,20 @@ function app() {
   function handleResetInputsSwitchValueChange(event) {
     addressSetArray.value = 0;
     memorySetArray.value = 0;
-
-    console.log(`resetInputsSwitch, value: ${event.detail.value}`);
   }
 
   function handleResetPcSwitchValueChange(event) {
     vm.pc = 0;
 
     updateVmView();
-
-    console.log(`resetPcSwitch, value: ${event.detail.value}`);
   }
 
   function handleTurboSwitchValueChange(event) {
     if (event.detail.value === 'false') {
-      runningStepTimeMs = 250;
+      runningStepTimeMs = 200;
     } else {
       runningStepTimeMs = 20;
     }
-
-    console.log(`turboSwitch, value: ${event.detail.value}`);
   }
 
   function handleResetMachineSwitchValueChange(event) {
@@ -99,20 +95,14 @@ function app() {
     memoryMapping = vm.memory.map((i) => ({ address: i, value: 0 }));
 
     updateVmView();
-
-    console.log(`resetMachineSwitch, value: ${event.detail.value}`);
   }
 
   function handleAddressSetArrayValueChange(event) {
     addressValueElement.textContent = `0x${addressSetArray.value.toString(16).padStart(2, '0')}`;
-
-    console.log(`addressSetArray, value: ${event.detail.value}`);
   }
 
   function handleMemorySetArrayValueChange(event) {
     memoryValueElement.textContent = `0x${memorySetArray.value.toString(16).padStart(2, '0')}`;
-
-    console.log(`memorySetArray, value: ${event.detail.value}`);
   }
 
   function handleMemorySetSwitchValueChange(event) {
@@ -121,8 +111,6 @@ function app() {
 
     addressSetArray.value += 1;
     memorySetArray.value = 0;
-
-    console.log(`memorySetSwitch, value: ${event.detail.value}`);
   }
 
   function handleDebugStepSwitchValueChange(event) {
@@ -133,8 +121,6 @@ function app() {
     } catch (error) {
       modal.open('Error excuting command', error, 'error');
     }
-
-    console.log(`debugStepSwitch, value: ${event.detail.value}`);
   }
 
   function handleRunProgramSwitchValueChange(event) {
@@ -166,11 +152,9 @@ function app() {
     } catch (error) {
       modal.open('Error running program', error, 'error');
     }
-
-    console.log(`runProgramSwitch, value: ${event.detail.value}`);
   }
 
-  function handleCompileSwitchValueChange(event) {
+  function handleCompileButtonClick(event) {
     try {
       vm.memory = new Array(memorySize).fill(0);
       vm.pc = 0;
@@ -191,8 +175,6 @@ function app() {
     } catch (error) {
       modal.open('Error compiiling code', error, 'error');
     }
-
-    console.log(`compileSwitch, value: ${event.detail.value}`);
   }
 
   async function handleExamplesTableClick(event) {
@@ -210,17 +192,19 @@ function app() {
       const fileText = await response.text();
 
       codeEditor.code = fileText;
+      saveFileComponent.filename = event.detail.value;
     } catch (error) {
       modal.open('Error fetching example code', error, 'error');
     }
-
-    console.log(`examplesTable, value: ${event.detail.value}`);
   }
 
   function handleOpCodesTableClick(event) {
     memorySetArray.value = event.detail.value;
+  }
 
-    console.log(`opCodesTable, value: ${event.detail.value}`);
+  function handleLoadFileFinished(event) {
+    codeEditor.code = event.detail.text;
+    saveFileComponent.filename = event.detail.filename;
   }
 
   // Event Listeners
@@ -233,17 +217,20 @@ function app() {
   memorySetArray.addEventListener('valueChange', handleMemorySetArrayValueChange);
   memorySetSwitch.addEventListener('valueChange', handleMemorySetSwitchValueChange);
   debugStepSwitch.addEventListener('valueChange', handleDebugStepSwitchValueChange);
-  compileSwitch.addEventListener('valueChange', handleCompileSwitchValueChange);
   examplesTable.addEventListener('tableClick', handleExamplesTableClick);
   opCodesTable.addEventListener('tableClick', handleOpCodesTableClick);
+  compileButton.addEventListener('click', handleCompileButtonClick);
+  loadFileComponent.addEventListener('uploadFinished', handleLoadFileFinished);
 
   // Updare the virtual machine registers and memory tables
   updateVmView();
 
   // Init editor with insperational quate
-  codeEditor.code = '; your code here';
-  resetMachineSwitch.value = 'true';
-  resetInputsSwitch.value = 'true';
+  codeEditor.code = '; your code here\n\n'
+    + '; Select one of the examples on the right,\n'
+    + '; or craft your own awesome code.\n'
+    + '; for more information:\n'
+    + ';    https://github.com/yaacov/smart-tools/blob/main/README.ASM.md\n';
 }
 
 // Start app

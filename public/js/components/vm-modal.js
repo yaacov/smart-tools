@@ -11,31 +11,55 @@ class VmModal extends HTMLElement {
   connectedCallback() {
     this.shadowRoot.innerHTML = html`
         <style>
+          /* Dark Theme Styles */
+          :host([theme="dark"]) .backdrop { background-color: rgba(0,0,0,0.5); }
+          :host([theme="dark"]) .modal {
+              background-color: #232323;
+              box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+          }
+          :host([theme="dark"]) .header.info { color: #56b6c2; }
+          :host([theme="dark"]) .header.warning { color: #e5c07b; }
+          :host([theme="dark"]) .header.error { color: #e06c75; }
+          :host([theme="dark"]) .close-button { color: #abb2bf; }
+
+          /* Light Theme Styles */
+          :host([theme="light"]) .backdrop { background-color: rgba(0,0,0,0.2); }
+          :host([theme="light"]) .modal {
+              background-color: #ffffff;
+              box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+          }
+          :host([theme="light"]) .header.info { color: #0184bc; }
+          :host([theme="light"]) .header.warning { color: #ffb400; }
+          :host([theme="light"]) .header.error { color: #ff4747; }
+          :host([theme="light"]) .close-button { color: #383a42; }
+
+          /* Common Styles */
           .backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            display: none;
-            z-index: 5;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              z-index: 5;
+              display: none;
+              position: fixed;
           }
           .modal {
-            position: fixed;
-            top: 10%;
-            left: 50%;
-            transform: translate(-50%, -0%);
-            width: 800px;
-            height: 400px;
-            background-color: #232323;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            display: none;
-            z-index: 10;
-
-            font-size: 17px;
-            font-weight: normal;
+              top: 10%;
+              left: 50%;
+              transform: translate(-50%, -0%);
+              width: 800px;
+              height: 400px;
+              border-radius: 10px;
+              display: none;
+              z-index: 10;
+              font-weight: normal;
+              position: fixed;
+          }
+          .close-button {
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              cursor: pointer;
           }
           .modal.open + .backdrop {
             display: block;
@@ -44,23 +68,13 @@ class VmModal extends HTMLElement {
             padding: 10px;
             font-weight: bold;
           }
-          .header.info { color: #2196F3; }
-          .header.warning { color: #FFC107; }
-          .header.error { color: #F44336; }
           .content {
             padding: 10px;
-          }
-          .close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: #fffefe;
-            cursor: pointer;
           }
         </style>
         <div class="modal" id="modal">
           <div class="header" id="header">
-            <span class="close" id="close">Close</span>
+            <span class="close-button" id="close-button">Close</span>
             <slot name="header"></slot>
           </div>
           <div class="content">
@@ -72,7 +86,7 @@ class VmModal extends HTMLElement {
 
     this.modalElement = this.shadowRoot.getElementById('modal');
     this.headerElement = this.shadowRoot.getElementById('header');
-    this.closeElement = this.shadowRoot.getElementById('close');
+    this.closeElement = this.shadowRoot.getElementById('close-button');
     this.backdropElement = this.shadowRoot.getElementById('backdrop');
 
     this.closeElement.addEventListener('click', () => this.close());
