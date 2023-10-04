@@ -1,6 +1,6 @@
 {
   "name": "smart-tools",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "S.M.A.R.T. (Simplified Memory & Assembly Reference Tool) - A set of tools designed for educational purposes to provide a clear understanding of assembly language and virtual machine operations.",
   "main": "smart-vm.js",
   "scripts": {
