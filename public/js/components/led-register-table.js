@@ -12,11 +12,12 @@ class LedRegisterTable extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['rega', 'regb', 'sp'];
+    return ['rega', 'regb', 'sp', 'pc'];
   }
 
-  attributeChangedCallback(name) {
-    if (name === 'rega' || name === 'regb' || name === 'sp') {
+  attributeChangedCallback(name, oldValue, newValue) {
+    const attributesToWatch = ['rega', 'regb', 'sp', 'pc'];
+    if (attributesToWatch.includes(name) && oldValue !== newValue) {
       this.render();
     }
   }
@@ -25,6 +26,7 @@ class LedRegisterTable extends HTMLElement {
     const regA = parseInt(this.getAttribute('rega'), 10);
     const regB = parseInt(this.getAttribute('regb'), 10);
     const SP = parseInt(this.getAttribute('sp'), 10);
+    const PC = parseInt(this.getAttribute('pc'), 10);
 
     let tableContent = html`
             <style>
@@ -68,6 +70,11 @@ class LedRegisterTable extends HTMLElement {
                 <td><led-array color="red" width="8" value="${SP}"></led-array></td>
                 <td>0x${SP.toString(16).toUpperCase().padStart(2, '0')}</td>
                 <td class="decimal hidden-on-small">${SP.toString(10).padStart(3, '0')}</td>
+              </tr>
+              <td class="label">PC</td>
+                <td><led-array color="red" width="8" value="${PC}"></led-array></td>
+                <td>0x${PC.toString(16).toUpperCase().padStart(2, '0')}</td>
+                <td class="decimal hidden-on-small">${PC.toString(10).padStart(3, '0')}</td>
               </tr>
             </table>
         `;

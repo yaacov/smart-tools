@@ -46,11 +46,11 @@ class LedIndicator extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['value'];
+    return ['value', 'color'];
   }
 
-  attributeChangedCallback(name) {
-    if (name === 'value') {
+  attributeChangedCallback(name, oldValue, newValue) {
+    if ((name === 'value' || name === 'color') && oldValue !== newValue) {
       this.render();
     }
   }

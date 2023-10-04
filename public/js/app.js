@@ -12,8 +12,6 @@ let runningStepTimeMs = 200;
 let runningSteps = 0;
 let runningInterval;
 
-let [memoryMapping] = vm.memory.map((i) => ({ address: i, value: 0 }));
-
 // Settings card components
 const resetInputsSwitch = document.querySelector('#reset-inputs-switch');
 const resetMachineSwitch = document.querySelector('#reset-machine-switch');
@@ -45,25 +43,14 @@ const modal = document.getElementById('vmModal');
 
 // Helper methods
 function updateVmView() {
-  let data = [];
-  for (let i = 0; i < vm.memory.length; i++) {
-    const mapping = i < memoryMapping.length ? memoryMapping[i] : undefined;
-
-    data.push({
-      address: i,
-      indicator: vm.pc === i || vm.sp === i,
-      value: vm.memory[i],
-      label: mapping ? mapping.label : undefined,
-      opCode: mapping ? mapping.asmOpcode : undefined,
-      oprand: mapping ? mapping.asmOperand : undefined,
-    });
-  }
-
   registersTable.setAttribute('rega', vm.registerA);
   registersTable.setAttribute('regb', vm.registerB);
   registersTable.setAttribute('sp', vm.sp);
+  registersTable.setAttribute('pc', vm.pc);
 
-  memoryTable.setAttribute('data', JSON.stringify(data));
+  memoryTable.memory = vm.memory;
+  memoryTable.pc = vm.pc;
+  memoryTable.sp = vm.sp;
 }
 
 // Main application
@@ -95,9 +82,12 @@ function app() {
     vm.registerA = 0;
     vm.registerB = 0;
     vm.memory = new Array(memorySize).fill(0);
-    memoryMapping = vm.memory.map((i) => ({ address: i, value: 0 }));
+
+    const memoryMap = vm.memory.map((i) => ({ address: i, value: 0 }));
 
     updateVmView();
+    memoryTable.memoryMap = memoryMap;
+    memoryTable.labels = {};
   }
 
   function handleAddressSetArrayValueChange(event) {
@@ -165,17 +155,18 @@ function app() {
       vm.registerA = 0;
       vm.registerB = 0;
 
-      const [memory, _, mapping] = compile(codeEditor.code);
+      const [memory, labels, memoryMap] = compile(codeEditor.code);
 
       if (memory.some(isNaN)) {
         const errorMessage = 'Compilation faile on unknown command';
         throw new Error(errorMessage);
       }
 
-      memoryMapping = mapping;
       vm.loadProgram(memory);
 
       updateVmView();
+      memoryTable.memoryMap = memoryMap;
+      memoryTable.labels = labels;
     } catch (error) {
       modal.open('Error compiiling code', error, 'error');
     }
