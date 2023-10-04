@@ -16,6 +16,22 @@ function removeComments(line) {
 }
 
 /**
+ * Converts all characters in a string to uppercase,
+ * except for 'x' characters in '0x...' hexadecimal number sequences.
+ *
+ * @param {string} line - The string to be converted.
+ * @returns {string} The converted string.
+ */
+function codeToUpper(line) {
+  return line.replace(/(0x[\da-fA-F]+)|./g, (match, p1) => {
+    if (p1) {
+      return p1; // return the hexadecimal number unchanged
+    }
+    return match.toUpperCase(); // uppercase other characters
+  });
+}
+
+/**
  * Replaces instances of "STOREA [BP + <number>]" with "STOREABP <number>"
  * and "LOADA [BP + <number>]" with "LOADABP <number>" in a given line.
  *
@@ -143,6 +159,7 @@ function processInstruction(instruction, operands, memory, labels, memoryMapping
 function compile(assemblyTxt) {
   const assemblyLines = assemblyTxt.split('\n')
     .map(removeComments)
+    .map(codeToUpper)
     .map(replaceSyntax)
     .filter((line) => line.trim().length > 0)
     .map(ensureSpaceAfterLabel);

@@ -65,6 +65,10 @@ Here's a list of available opcodes in the SMART Assembly language:
 - `LOADA [BP + <value>]`: Load a value from the stack into register A using the Base Pointer and offset.
 - `STOREA [BP + <value>]`: Store a value from register A onto the stack using the Base Pointer and offset.
 
+## Case insensitive
+
+In SMART Assembly, case sensitivity is not enforced, meaning that the syntax recognizes labels and commands irrespective of letter casing. For instance, the label `START:` is equivalent to `start:`, and similarly, commands can be written in either lowercase or uppercase without affecting their functionality. Thus, `loada` and `LOADA` are interpreted as the same command.
+
 ## Comments and Labels
 
 ### Comments
