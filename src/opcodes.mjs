@@ -31,6 +31,9 @@ export const opcodes = {
   END: 0xFF,
 };
 
+// Params list length can be 0 or 1,
+// in case of 0 params [NOP, NOTA, NOTB, RET, END] the compiler will pad the
+// memory with a 0, to align with [opcode, data] pairs.
 export const opcodesParams = {
   [opcodes.NOP]: 0,
   [opcodes.LOADA]: 1,
