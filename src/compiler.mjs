@@ -100,7 +100,7 @@ function processLabel(instruction, operands, labels, address) {
     address += operands.length; // For each data value
   } else if (instruction in opcodes) {
     address += 1; // For the opcode
-    address += operands.length; // For each operand
+    address += 1; // We always have one opcode and one operand
   }
 
   return address; // Return the updated address
@@ -140,10 +140,14 @@ function processInstruction(instruction, operands, memory, labels, memoryMapping
       throwFormattedError('Wrong number of operands', instruction, memory.length);
     }
 
-    operands.forEach((operand) => {
+    // In case of a command with no params, add a placeholder to align with [opcode, data] pairs
+    if (operands.length === 1) {
+      const operand = operands[0];
       const operandValue = findKeyByValue(labels, operand) || parseValue(operand);
       addToMemory(operandValue, 'operand', null, operand);
-    });
+    } else {
+      addToMemory(0, '', undefined);
+    }
   } else if (instruction) {
     // Note: a valid line with a lable and no opCode will have an instruction == undefined.
     throwFormattedError('Invalid instruction', instruction, memory.length);

@@ -1,4 +1,4 @@
-import { opcodes, opcodesParams } from './opcodes.mjs';
+import { opcodes } from './opcodes.mjs';
 import { throwFormattedError } from './debug.mjs';
 
 class VM {
@@ -85,7 +85,8 @@ class VM {
 
     // Dont incriment the counter on jumps
     if (!jumpFlag) {
-      this.pc += (1 + opcodesParams[instruction]);
+      // 1 opcode + 1 data (we always have paris of 1 opcode and 1 data bytes)
+      this.pc += 2;
     }
 
     // Memory gurd
