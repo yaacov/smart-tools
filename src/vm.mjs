@@ -10,18 +10,12 @@ class VM {
     this.sp = 0;
   }
 
-  fetchOperand() {
-    return this.memory[this.pc + 1];
-  }
-
   pop() {
-    this.sp -= 1;
-    return this.memory[this.sp];
+    return this.memory[--this.sp];
   }
 
   push(value) {
-    this.memory[this.sp] = value;
-    this.sp += 1;
+    this.memory[this.sp++] = value;
   }
 
   /**
@@ -30,69 +24,63 @@ class VM {
    * @returns {boolean} - Returns true if execution should continue, false otherwise.
    */
   execute() {
-    let jumpFlag = false;
+    // Load instraction and address registers
     const instruction = this.memory[this.pc];
+    const address = this.memory[this.pc + 1];
+
+    // Update base pointer, base pointer is one less then current stack pointer
+    // to allow for [BP + 0] to point to return address.
+    const bp = this.sp - 1;
+
+    // Bump pc +2 = code + address pair
+    this.pc += 2;
 
     const handlers = {
       [opcodes.NOP]: () => true,
-      [opcodes.LOADA]: () => this.registerA = this.memory[this.fetchOperand()],
-      [opcodes.LOADB]: () => this.registerB = this.memory[this.fetchOperand()],
-      [opcodes.STOREA]: () => this.memory[this.fetchOperand()] = this.registerA,
-      [opcodes.STOREB]: () => this.memory[this.fetchOperand()] = this.registerB,
-      [opcodes.ORA]: () => this.registerA |= this.memory[this.fetchOperand()],
-      [opcodes.ORB]: () => this.registerB |= this.memory[this.fetchOperand()],
-      [opcodes.ANDA]: () => this.registerA &= this.memory[this.fetchOperand()],
-      [opcodes.ANDB]: () => this.registerB &= this.memory[this.fetchOperand()],
-      [opcodes.XORA]: () => this.registerA ^= this.memory[this.fetchOperand()],
-      [opcodes.XORB]: () => this.registerB ^= this.memory[this.fetchOperand()],
+      [opcodes.END]: () => false,
+
+      // Memory operations
+      [opcodes.STOREA]: () => this.memory[address] = this.registerA,
+      [opcodes.STOREB]: () => this.memory[address] = this.registerB,
+
+      // Arithmetic operations
+      [opcodes.LOADA]: () => this.registerA = this.memory[address],
+      [opcodes.LOADB]: () => this.registerB = this.memory[address],
+      [opcodes.ORA]: () => this.registerA |= this.memory[address],
+      [opcodes.ORB]: () => this.registerB |= this.memory[address],
+      [opcodes.ANDA]: () => this.registerA &= this.memory[address],
+      [opcodes.ANDB]: () => this.registerB &= this.memory[address],
+      [opcodes.XORA]: () => this.registerA ^= this.memory[address],
+      [opcodes.XORB]: () => this.registerB ^= this.memory[address],
       [opcodes.NOTA]: () => this.registerA = ~this.registerA & 0xff,
       [opcodes.NOTB]: () => this.registerB = ~this.registerB & 0xff,
-      [opcodes.SHLA]: () => { this.registerA = (this.registerA << this.fetchOperand()) & 0xff; },
-      [opcodes.SHLB]: () => { this.registerB = (this.registerB << this.fetchOperand()) & 0xff; },
-      [opcodes.SHRA]: () => this.registerA >>= this.fetchOperand(),
-      [opcodes.SHRB]: () => this.registerB >>= this.fetchOperand(),
-      [opcodes.JUMP]: () => { const address = this.fetchOperand(); this.pc = address; jumpFlag = true; },
-      [opcodes.JZA]: () => { const address = this.fetchOperand(); if (this.registerA === 0) { this.pc = address; jumpFlag = true; } },
-      [opcodes.JZB]: () => { const address = this.fetchOperand(); if (this.registerB === 0) { this.pc = address; jumpFlag = true; } },
-      [opcodes.ADDA]: () => { this.registerA = (this.registerA + this.memory[this.fetchOperand()]) & 0xff; },
-      [opcodes.ADDB]: () => { this.registerB = (this.registerB + this.memory[this.fetchOperand()]) & 0xff; },
-      [opcodes.SETBP]: () => { const address = this.fetchOperand(); this.sp = address; },
-      [opcodes.PUSH]: () => { const value = this.memory[this.fetchOperand()]; this.push(value); },
-      [opcodes.POP]: () => { this.memory[this.fetchOperand()] = this.pop(); },
-      [opcodes.CALL]: () => {
-        this.push(this.pc + 2); /* +2 = code + operand */
-        const address = this.fetchOperand(); this.pc = address; jumpFlag = true;
-      },
-      [opcodes.RET]: () => { this.pc = this.pop(); jumpFlag = true; },
-      [opcodes.LOADABP]: () => {
-        // base pointer is one less then current stack pointer
-        // to allow for [BP + 0] to point to return address.
-        const bp = this.sp - 1;
-        const address = (bp - this.fetchOperand()) & 0xff;
-        this.registerA = this.memory[address];
-      },
-      [opcodes.STOREABP]: () => {
-        const bp = this.sp - 1;
-        const address = (bp - this.fetchOperand()) & 0xff;
-        this.memory[address] = this.registerA;
-      },
-      [opcodes.END]: () => false,
+      [opcodes.SHLA]: () => this.registerA = (this.registerA << address) & 0xff,
+      [opcodes.SHLB]: () => this.registerB = (this.registerB << address) & 0xff,
+      [opcodes.SHRA]: () => this.registerA >>= address,
+      [opcodes.SHRB]: () => this.registerB >>= address,
+      [opcodes.ADDA]: () => this.registerA = (this.registerA + this.memory[address]) & 0xff,
+      [opcodes.ADDB]: () => this.registerB = (this.registerB + this.memory[address]) & 0xff,
+
+      // Jump operations
+      [opcodes.JUMP]: () => this.pc = address,
+      [opcodes.JZA]: () => this.pc = this.registerA === 0 ? address : this.pc,
+      [opcodes.JZB]: () => this.pc = this.registerB === 0 ? address : this.pc,
+
+      // Stack operations
+      [opcodes.SETBP]: () => this.sp = address,
+      [opcodes.PUSH]: () => this.push(this.memory[address]),
+      [opcodes.POP]: () => this.memory[address] = this.pop(),
+      [opcodes.CALL]: () => { this.push(this.pc); this.pc = address; },
+      [opcodes.RET]: () => this.pc = this.pop(),
+      [opcodes.LOADABP]: () => this.registerA = this.memory[(bp - address) & 0xff],
+      [opcodes.STOREABP]: () => this.memory[(bp - address) & 0xff] = this.registerA,
     };
 
+    // Try to execute one instruction + address pair
     if (instruction in handlers) {
       handlers[instruction]();
     } else {
       throwFormattedError('Invalid instruction', instruction, this.pc);
-    }
-
-    // Dont incriment the counter on jumps
-    if (!jumpFlag) {
-      this.pc += 2; /* +2 = code + operand */
-    }
-
-    // Memory gurd
-    if (this.pc >= this.memory.length) {
-      this.pc = 0;
     }
 
     // Exit on end
