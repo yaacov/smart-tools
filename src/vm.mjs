@@ -15,15 +15,13 @@ class VM {
   }
 
   pop() {
-    const value = this.memory[this.sp];
     this.sp -= 1;
-
-    return value;
+    return this.memory[this.sp];
   }
 
   push(value) {
-    this.sp += 1;
     this.memory[this.sp] = value;
+    this.sp += 1;
   }
 
   /**
@@ -67,11 +65,15 @@ class VM {
       },
       [opcodes.RET]: () => { this.pc = this.pop(); jumpFlag = true; },
       [opcodes.LOADABP]: () => {
-        const address = (this.sp - this.fetchOperand()) & 0xff;
+        // base pointer is one less then current stack pointer
+        // to allow for [BP + 0] to point to return address.
+        const bp = this.sp - 1;
+        const address = (bp - this.fetchOperand()) & 0xff;
         this.registerA = this.memory[address];
       },
       [opcodes.STOREABP]: () => {
-        const address = (this.sp - this.fetchOperand()) & 0xff;
+        const bp = this.sp - 1;
+        const address = (bp - this.fetchOperand()) & 0xff;
         this.memory[address] = this.registerA;
       },
       [opcodes.END]: () => false,
@@ -85,8 +87,7 @@ class VM {
 
     // Dont incriment the counter on jumps
     if (!jumpFlag) {
-      // 1 opcode + 1 data (we always have paris of 1 opcode and 1 data bytes)
-      this.pc += 2;
+      this.pc += 2; /* +2 = code + operand */
     }
 
     // Memory gurd
