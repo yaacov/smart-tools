@@ -29,7 +29,6 @@ export function disassemble(memory) {
   let address = 0;
   let labelDatIndex = 0;
   let labelJumIndex = 0;
-  let progEnd = false;
   const labels = {};
   const memoryMapping = new Array(memory.length).fill(null);
 
@@ -38,7 +37,7 @@ export function disassemble(memory) {
     const opcodeName = findKeyByValue(opcodes, opcodeValue);
 
     // assume it's an opCode or Data
-    if (!opcodeName || progEnd) {
+    if (!opcodeName) {
       memoryMapping[address] = {
         address,
         value: memory[address],
@@ -94,10 +93,16 @@ export function disassemble(memory) {
         case 'ORB':
         case 'NOP':
         case 'RET':
-          // obCodes with no operands
+          // obCodes with no operands, have placeholder zero as operand
+          operandValue = 0;
+          asmOperand = '';
+          address++;
           break;
         case 'END':
-          progEnd = true;
+          // obCodes with no operands, have placeholder zero as operand
+          operandValue = 0;
+          asmOperand = '';
+          address++;
           break;
         default:
           console.error(`Unhandled opcode: ${opcodeName}`);
