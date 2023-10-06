@@ -197,6 +197,10 @@ function app() {
     memorySetArray.value = event.detail.value;
   }
 
+  function handleMemoryTableClick(event) {
+    addressSetArray.value = event.detail.value;
+  }
+
   function handleLoadFileFinished(event) {
     codeEditor.code = event.detail.text;
     saveFileComponent.filename = event.detail.filename;
@@ -214,6 +218,7 @@ function app() {
   debugStepSwitch.addEventListener('valueChange', handleDebugStepSwitchValueChange);
   examplesTable.addEventListener('tableClick', handleExamplesTableClick);
   opCodesTable.addEventListener('tableClick', handleOpCodesTableClick);
+  memoryTable.addEventListener('tableClick', handleMemoryTableClick);
   compileButton.addEventListener('click', handleCompileButtonClick);
   loadFileComponent.addEventListener('uploadFinished', handleLoadFileFinished);
 

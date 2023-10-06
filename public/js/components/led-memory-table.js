@@ -32,6 +32,10 @@ class LedMemoryTable extends HTMLElement {
         }
         .address {
           color: #D3D3D3;
+          cursor: pointer;
+        }
+        .address:hover {
+          color: #b3b3b3;
         }
         .label {
           color: #D4AF37;
@@ -170,6 +174,7 @@ class LedMemoryTable extends HTMLElement {
 
     cells[0].className = 'address';
     cells[0].textContent = address;
+    cells[0].addEventListener('click', () => this.handleRowClick(index));
 
     cells[1].firstChild.setAttribute('color', 'red');
     cells[1].firstChild.setAttribute('value', ledValue);
@@ -227,6 +232,13 @@ class LedMemoryTable extends HTMLElement {
 
   formatDecimal(value) {
     return `${value.toString(10).padStart(3, '0')}`;
+  }
+
+  handleRowClick(value) {
+    const event = new CustomEvent('tableClick', {
+      detail: { value },
+    });
+    this.dispatchEvent(event);
   }
 }
 
