@@ -116,12 +116,11 @@ function processLabel(instruction, operands, labels, address) {
 function processInstruction(instruction, operands, memory, labels, memoryMapping) {
   const addToMemory = (value, type, asmOpcode = null, asmOperand = null) => {
     const address = memory.length;
-    const valueInt = parseInt(value, 10);
 
-    memory.push(valueInt);
+    memory.push(value);
     memoryMapping.push({
       address,
-      value: valueInt,
+      value,
       type,
       asmOpcode,
       asmOperand,
@@ -152,14 +151,16 @@ function processInstruction(instruction, operands, memory, labels, memoryMapping
       addToMemory(0, '', undefined);
     } else {
       const operand = operands[0];
-      const operandValue = findKeyByValue(labels, operand) || parseValue(operand);
+      const value = findKeyByValue(labels, operand) || parseValue(operand);
+      const operandValue = parseInt(value, 10);
+
       addToMemory(operandValue, 'operand', null, operand);
     }
 
     return;
   }
 
-  // Note: a valid line with a lable and no opCode will have an instruction == undefined.
+  // Valid line with a lable and no opCode will have an instruction == undefined.
   if (instruction !== undefined) {
     throwFormattedError('Invalid instruction', instruction, memory.length);
   }
