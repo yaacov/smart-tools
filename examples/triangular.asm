@@ -1,4 +1,4 @@
-; This program calculates the fibonachi of a number
+; This program calculates the triangular of a number
 
 START:  LOADA NUM      ; Load the number into register A (initial value)
         LOADB NUM       ; Load the number into register B (to act as a counter)
