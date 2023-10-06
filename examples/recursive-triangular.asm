@@ -7,10 +7,10 @@ SETBP STACK
 LOADA NUM1
 PUSHA
 CALL FUNC
-POPA ; clear stack into regA
+POPA ; Get return value into regA
 
-; Move result from register B to memory
-STOREB RESULT
+; Move result from register A to memory
+STOREA RESULT
 
 ; End program 
 END
@@ -23,13 +23,10 @@ MINUSONE: DATA 0xFF
 TEMP:     DATA 0x00
 
 ; Recursive triangular
+; f(n) = n + f(n-1)
 FUNC:
     ; Load arg to register A
     LOADA [BP + 1] ; [base pointer + 1] is the first function argument
-
-    ; Add the arg to register B using TEMP
-    STOREA TEMP
-    ADDB TEMP
 
     ; Check for termination condition, arg == 0
     JZA RET
@@ -38,7 +35,16 @@ FUNC:
     ADDA MINUSONE
     PUSHA
     CALL FUNC
-    POPA ; clear stack into regA
+    POPA ; Get return value into regA
+
+    ; Add the retrun value to arg:
+    STOREA TEMP    ; TEMP = return value
+    LOADA [BP + 1] ; regA = arg
+    ADDA TEMP      ; regA + TEMP
+
+    ; Store return value in arg
+    STOREA [BP + 1]
+
 RET: RET
 
 ; Start of stack
