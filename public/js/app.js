@@ -92,11 +92,11 @@ function app() {
   }
 
   function handleAddressSetArrayValueChange(event) {
-    addressValueElement.textContent = `0x${addressSetArray.value.toString(16).padStart(2, '0')}`;
+    addressValueElement.textContent = `0x${addressSetArray.value.toString(16).toUpperCase().padStart(2, '0')}`;
   }
 
   function handleMemorySetArrayValueChange(event) {
-    memoryValueElement.textContent = `0x${memorySetArray.value.toString(16).padStart(2, '0')}`;
+    memoryValueElement.textContent = `0x${memorySetArray.value.toString(16).toUpperCase().padStart(2, '0')}`;
     memoryValueDecElement.textContent = memorySetArray.value;
   }
 

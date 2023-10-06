@@ -1,44 +1,44 @@
-/*
-Instruction Format: -NNN TT-R
+/**
+  Instruction Format: -NNN TT-R
 
-R (Bit 0):
-    0: Register A (regA)
-    1: Register B (RegB)
+    R (Bit 0):
+        0: Register A (regA)
+        1: Register B (RegB)
 
-- (Bit 1): Reserved bit (always set to 0)
+    - (Bit 1): Reserved bit (always set to 0)
 
-TT (Bits 2,3) - Opcode Type:
-    00: Store to memory operations
-    01: Arithmetic operations (result saved in register)
-    10: Jump operations (sets program counter)
-    11: Stack operations (pop and push to stack)
+    TT (Bits 2,3) - Opcode Type:
+        00: Store to memory operations
+        01: Arithmetic operations (result saved in register)
+        10: Jump operations (sets program counter)
+        11: Stack operations (pop and push to stack)
 
-NNN (Bits 4,5,6) - Operation, depending on TT:
-    Store:
-        000: reserved - NOP
-        001: Store to memory
-    Arithmetic:
-        000: Pass-through (reg = memory)
-        001: OR (reg OR memory)
-        010: AND (reg AND memory)
-        011: XOR (reg XOR memory)
-        100: NOT (NOT reg)
-        101: Shift Left
-        110: Shift Right
-        111: Add (reg + memory)
-    Jump:
-        000: Unconditional Jump
-        001: Conditional Jump (if register == 0)
-    Stack:
-        000: Set base pointer
-        001: Push to stack
-        010: Pop from stack
-        011: Call function
-        100: Return from function
-        101: Load (base pointer + address) to regA
-        110: Store regA to (base pointer + address)
+    NNN (Bits 4,5,6) - Operation, depending on TT:
+        Store:
+            000: reserved - NOP
+            001: Store to memory
+        Arithmetic:
+            000: Pass-through (reg = memory)
+            001: OR (reg OR memory)
+            010: AND (reg AND memory)
+            011: XOR (reg XOR memory)
+            100: NOT (NOT reg)
+            101: Shift Left
+            110: Shift Right
+            111: Add (reg + memory)
+        Jump:
+            000: Unconditional Jump
+            001: Conditional Jump (if register == 0)
+        Stack:
+            000: Set base pointer
+            001: Push to stack
+            010: Pop from stack
+            011: Call function
+            100: Return from function
+            101: Load (base pointer + address) to regA
+            110: Store regA to (base pointer + address)
 
-- (Bit 7): Reserved bit (always set to 0)
+    - (Bit 7): Reserved bit (always set to 0)
 */
 export const opcodes = {
   NOP: 0x00,
@@ -77,9 +77,11 @@ export const opcodes = {
   STOREABP: 0x6C, // 0110 11 00 - Store regA to (base pointer + address)
 };
 
-// Params list length can be 0 or 1,
-// in case of 0 params [NOP, NOTA, NOTB, RET, END] the compiler will pad the
-// memory with a 0, to align with [opcode, data] pairs.
+/**
+ * Params list length can be 0 or 1,
+ * in case of 0 params [NOP, NOTA, NOTB, RET, END] the compiler will pad the
+ * memory with a 0, to align with [opcode, data] pairs.
+ */
 export const opcodesParams = {
   [opcodes.NOP]: 0,
   [opcodes.END]: 0,
