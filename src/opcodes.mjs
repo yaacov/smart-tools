@@ -40,7 +40,6 @@ NNN (Bits 4,5,6) - Operation, depending on TT:
 
 - (Bit 7): Reserved bit (always set to 0)
 */
-
 export const opcodes = {
   NOP: 0x00,
   END: 0xFF,
@@ -70,8 +69,8 @@ export const opcodes = {
   JZB: 0x19, //      0001 10 01 - Conditional Jump if regB == 0
 
   SETBP: 0x0C, //    0000 11 00 - Set base pointer
-  PUSHA: 0x1C, //     0001 11 00 - Push to stack
-  POPA: 0x2C, //      0010 11 00 - Pop from stack
+  PUSHA: 0x1C, //    0001 11 00 - Push to stack
+  POPA: 0x2C, //     0010 11 00 - Pop from stack
   CALL: 0x3C, //     0011 11 00 - Call function
   RET: 0x4C, //      0100 11 00 - Return from function
   LOADABP: 0x5C, //  0101 11 00 - Load (base pointer + address) to regA
