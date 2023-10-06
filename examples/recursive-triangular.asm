@@ -24,19 +24,17 @@ TEMP:     DATA 0x00
 
 ; Recursive triangular
 FUNC:
-    ; Load argument to register A
+    ; Load arg to register A
     LOADA [BP + 1] ; [base pointer + 1] is the first function argument
 
-    ; Load argument into TEMP
+    ; Add the arg to register B using TEMP
     STOREA TEMP
-
-    ; Add the argument to register B
     ADDB TEMP
 
     ; Check for termination condition, arg == 0
     JZA RET
 
-   ; Call recursively with (arg - 1) 
+    ; Call recursively with (arg - 1) 
     ADDA MINUSONE
     PUSHA
     CALL FUNC
