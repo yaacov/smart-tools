@@ -33,14 +33,11 @@ FUNC:
     ; Add the argument to register B
     ADDB TEMP
 
-    ; Use register A to check for termination condition (arg == 0)
+    ; Check for termination condition, arg == 0
     JZA RET
 
-    ; Put (arg - 1) in temp
+   ; Call recursively with (arg - 1) 
     ADDA MINUSONE
-    STOREA TEMP
-
-    ; Call recursively with num - 1 
     PUSHA
     CALL FUNC
     POPA ; clear stack into regA
