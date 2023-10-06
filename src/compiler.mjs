@@ -97,10 +97,10 @@ function processLabel(instruction, operands, labels, address) {
   }
 
   if (instruction === 'DATA') {
-    address += operands.length; // For each data value
-  } else if (instruction in opcodes) {
-    address += 1; // For the opcode
-    address += 1; // We always have one opcode and one operand
+    address += 1; // +1 = one data entry
+  }
+  if (instruction in opcodes) {
+    address += 2; // +2 = opcode + operand
   }
 
   return address; // Return the updated address
@@ -130,26 +130,37 @@ function processInstruction(instruction, operands, memory, labels, memoryMapping
   };
 
   if (instruction === 'DATA') {
-    operands.forEach((operand) => {
-      addToMemory(parseValue(operand), 'data', null, operand);
-    });
-  } else if (instruction in opcodes) {
+    if (operands.length !== 1) {
+      throwFormattedError('Wrong number of data operands', instruction, memory.length);
+    }
+
+    const operand = operands[0];
+    addToMemory(parseValue(operand), 'data', null, operand);
+
+    return;
+  }
+
+  if (instruction in opcodes) {
     addToMemory(opcodes[instruction], 'opcode', instruction);
 
     if (operands.length !== opcodesParams[opcodes[instruction]]) {
-      throwFormattedError('Wrong number of operands', instruction, memory.length);
+      throwFormattedError('Wrong number of opcode operands', instruction, memory.length);
     }
 
     // In case of a command with no params, add a placeholder to align with [opcode, data] pairs
-    if (operands.length === 1) {
+    if (operands.length === 0) {
+      addToMemory(0, '', undefined);
+    } else {
       const operand = operands[0];
       const operandValue = findKeyByValue(labels, operand) || parseValue(operand);
       addToMemory(operandValue, 'operand', null, operand);
-    } else {
-      addToMemory(0, '', undefined);
     }
-  } else if (instruction) {
-    // Note: a valid line with a lable and no opCode will have an instruction == undefined.
+
+    return;
+  }
+
+  // Note: a valid line with a lable and no opCode will have an instruction == undefined.
+  if (instruction !== undefined) {
     throwFormattedError('Invalid instruction', instruction, memory.length);
   }
 }
@@ -163,9 +174,9 @@ function processInstruction(instruction, operands, memory, labels, memoryMapping
 function compile(assemblyTxt) {
   const assemblyLines = assemblyTxt.split('\n')
     .map(removeComments)
+    .filter((line) => line.length > 0)
     .map(codeToUpper)
     .map(replaceSyntax)
-    .filter((line) => line.trim().length > 0)
     .map(ensureSpaceAfterLabel);
   const memory = [];
   const memoryMapping = [];
