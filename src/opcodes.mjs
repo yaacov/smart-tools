@@ -1,21 +1,22 @@
 /*
-Instruction Format: -NNN -TTR
+Instruction Format: -NNN TT-R
 
 R (Bit 0):
     0: Register A (regA)
     1: Register B (RegB)
 
-TT (Bits 1,2) - Opcode Type:
+- (Bit 1): Reserved bit (always set to 0)
+
+TT (Bits 2,3) - Opcode Type:
     00: Store operations
     01: Arithmetic operations (result saved in register)
     10: Jump operations (sets program counter)
     11: Stack operations
 
-- (Bit 3): Reserved bit (always set to 0)
-
 NNN (Bits 4,5,6) - Operation, depending on TT:
     Store:
-        000: Store to memory
+        000: reserved - NOP
+        001: Store to memory
     Arithmetic:
         000: Pass-through (reg = memory)
         001: OR (reg OR memory)
@@ -26,54 +27,55 @@ NNN (Bits 4,5,6) - Operation, depending on TT:
         110: Shift Right
         111: Add (reg + memory)
     Jump:
-        001: Unconditional Jump
-        010: Conditional Jump (if register == 0)
+        000: Unconditional Jump
+        001: Conditional Jump (if register == 0)
     Stack:
-        001: Set base pointer
-        010: Push to stack
-        011: Pop from stack
-        100: Call function
-        101: Return from function
-        110: Load (base pointer + address) to regA
-        111: Store regA to (base pointer + address)
+        000: Set base pointer
+        001: Push to stack
+        010: Pop from stack
+        011: Call function
+        100: Return from function
+        101: Load (base pointer + address) to regA
+        110: Store regA to (base pointer + address)
 
 - (Bit 7): Reserved bit (always set to 0)
 */
+
 export const opcodes = {
   NOP: 0x00,
   END: 0xFF,
 
-  STOREA: 0x10, // Store to memory with regA
-  STOREB: 0x11, // Store to memory with regB
+  STOREA: 0x10, //   0001 00 00 - Store to memory with regA 0100
+  STOREB: 0x11, //   0001 00 01 - Store to memory with regB 0101
 
-  LOADA: 0x20, // Pass-through with regA
-  LOADB: 0x21, // Pass-through with regB
-  ORA: 0x22, // OR with regA
-  ORB: 0x23, // OR with regB
-  ANDA: 0x24, // AND with regA
-  ANDB: 0x25, // AND with regB
-  XORA: 0x26, // XOR with regA
-  XORB: 0x27, // XOR with regB
-  NOTA: 0x28, // NOT with regA
-  NOTB: 0x29, // NOT with regB
-  SHLA: 0x2A, // Shift Left with regA
-  SHLB: 0x2B, // Shift Left with regB
-  SHRA: 0x2C, // Shift Right with regA
-  SHRB: 0x2D, // Shift Right with regB
-  ADDA: 0x2E, // Add with regA
-  ADDB: 0x2F, // Add with regB
+  LOADA: 0x04, //    0000 01 00 - Pass-through with regA
+  LOADB: 0x05, //    0000 01 01 - Pass-through with regB
+  ORA: 0x14, //      0001 01 00 - OR with regA
+  ORB: 0x15, //      0001 01 01 - OR with regB
+  ANDA: 0x24, //     0010 01 00 - AND with regA
+  ANDB: 0x25, //     0010 01 01 - AND with regB
+  XORA: 0x34, //     0011 01 00 - XOR with regA
+  XORB: 0x35, //     0011 01 01 - XOR with regB
+  NOTA: 0x44, //     0100 01 00 - NOT with regA
+  NOTB: 0x45, //     0100 01 01 - NOT with regB
+  SHLA: 0x54, //     0101 01 00 - Shift Left with regA
+  SHLB: 0x55, //     0101 01 - Shift Left with regB
+  SHRA: 0x64, //     0110 01 00 - Shift Right with regA
+  SHRB: 0x65, //     0110 01 01 - Shift Right with regB
+  ADDA: 0x74, //     0111 01 00 - Add with regA
+  ADDB: 0x75, //     0111 01 01 - Add with regB
 
-  JUMP: 0x41, // Unconditional Jump
-  JZA: 0x42, // Conditional Jump if regA == 0
-  JZB: 0x43, // Conditional Jump if regB == 0
+  JUMP: 0x08, //     0000 10 00 - Unconditional Jump
+  JZA: 0x18, //      0001 10 00 - Conditional Jump if regA == 0
+  JZB: 0x19, //      0001 10 01 - Conditional Jump if regB == 0
 
-  SETBP: 0x51, // Set base pointer
-  PUSH: 0x52, // Push to stack
-  POP: 0x53, // Pop from stack
-  CALL: 0x54, // Call function
-  RET: 0x55, // Return from function
-  LOADABP: 0x56, // Load (base pointer + address) to regA
-  STOREABP: 0x57, // Store regA to (base pointer + address)
+  SETBP: 0x0C, //    0000 11 00 - Set base pointer
+  PUSH: 0x1C, //     0001 11 00 - Push to stack
+  POP: 0x2C, //      0010 11 00 - Pop from stack
+  CALL: 0x3C, //     0011 11 00 - Call function
+  RET: 0x4C, //      0100 11 00 - Return from function
+  LOADABP: 0x5C, //  0101 11 00 - Load (base pointer + address) to regA
+  STOREABP: 0x6C, // 0110 11 00 - Store regA to (base pointer + address)
 };
 
 // Params list length can be 0 or 1,
