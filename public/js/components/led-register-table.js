@@ -47,7 +47,7 @@ class LedRegisterTable extends HTMLElement {
                 .hidden-on-small {
                   display: none;
                 }
-                @media (min-width: 850px) {
+                @media (min-width: 900px) {
                   .hidden-on-small {
                         display: table-cell;
                   }

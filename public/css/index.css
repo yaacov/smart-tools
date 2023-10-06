@@ -52,6 +52,27 @@
     margin-top: 5px;
 }
 
+.memory-addr, .memory-value {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.memory-addr .label, .memory-value .label {
+    text-align: right;
+    width: 50px;
+}
+
+.memory-addr .hex, .memory-value .hex {
+    text-align: right;
+    width: 50px;
+}
+
+.memory-addr .dec, .memory-value .dec {
+    text-align: right;
+    width: 30px;
+}
+
 .compile-button {
     font-weight: bold;
 }
@@ -84,7 +105,7 @@
 }
 
 /* When screen width is 850 or more, show the element */
-@media (min-width: 850px) {
+@media (min-width: 900px) {
     .hidden-on-small {
         display: flex;
     }

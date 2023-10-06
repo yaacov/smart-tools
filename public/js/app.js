@@ -21,6 +21,7 @@ const memorySetSwitch = document.querySelector('#memory-set-switch');
 
 const addressValueElement = document.getElementById('address-value');
 const memoryValueElement = document.getElementById('memory-value');
+const memoryValueDecElement = document.getElementById('memory-value-dec');
 
 // VM card components
 const debugStepSwitch = document.querySelector('#debug-step-switch');
@@ -96,6 +97,7 @@ function app() {
 
   function handleMemorySetArrayValueChange(event) {
     memoryValueElement.textContent = `0x${memorySetArray.value.toString(16).padStart(2, '0')}`;
+    memoryValueDecElement.textContent = memorySetArray.value;
   }
 
   function handleMemorySetSwitchValueChange(event) {
@@ -198,7 +200,10 @@ function app() {
   }
 
   function handleMemoryTableClick(event) {
-    addressSetArray.value = event.detail.value;
+    const address = event.detail.value;
+
+    addressSetArray.value = address;
+    memorySetArray.value = vm.memory[address];
   }
 
   function handleLoadFileFinished(event) {

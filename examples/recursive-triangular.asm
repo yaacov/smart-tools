@@ -1,9 +1,9 @@
-; Program to calculate factorial revursively
+; Program to calculate triangular revursively
 
 ; Init the stack pointer (base pointer)
 SETBP STACK
 
-; Call recursive factorial method
+; Call recursive triangular method
 PUSH NUM1
 CALL FUNC
 POP TEMP ; clear stack
@@ -21,13 +21,15 @@ ZERO:     DATA 0x00
 MINUSONE: DATA 0xFF
 TEMP:     DATA 0x00
 
-; Recursive factorial
+; Recursive triangular
 FUNC:
     ; Load argument to register A
     LOADA [BP + 1] ; [base pointer + 1] is the first function argument
 
-    ; Add the number to register B
+    ; Load argument into TEMP
     STOREA TEMP
+
+    ; Add the argument to register B
     ADDB TEMP
 
     ; Use register A to check for termination condition (arg == 0)
