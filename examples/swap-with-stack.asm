@@ -4,12 +4,17 @@
 SETBP STACK
 
 ; Push two numbers in order
-PUSH NUM1
-PUSH NUM2
+LOADA NUM1
+PUSHA
+LOADA NUM2
+PUSHA
+
 
 ; Pop the numbers out of order
-POP NUM1
-POP NUM2
+POPA
+STOREA NUM1
+POPA
+STOREA NUM2
 
 ; End program 
 END

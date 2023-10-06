@@ -8,10 +8,10 @@ R (Bit 0):
 - (Bit 1): Reserved bit (always set to 0)
 
 TT (Bits 2,3) - Opcode Type:
-    00: Store operations
+    00: Store to memory operations
     01: Arithmetic operations (result saved in register)
     10: Jump operations (sets program counter)
-    11: Stack operations
+    11: Stack operations (pop and push to stack)
 
 NNN (Bits 4,5,6) - Operation, depending on TT:
     Store:
@@ -45,8 +45,8 @@ export const opcodes = {
   NOP: 0x00,
   END: 0xFF,
 
-  STOREA: 0x10, //   0001 00 00 - Store to memory with regA 0100
-  STOREB: 0x11, //   0001 00 01 - Store to memory with regB 0101
+  STOREA: 0x10, //   0001 00 00 - Store to memory with regA
+  STOREB: 0x11, //   0001 00 01 - Store to memory with regB
 
   LOADA: 0x04, //    0000 01 00 - Pass-through with regA
   LOADB: 0x05, //    0000 01 01 - Pass-through with regB
@@ -59,7 +59,7 @@ export const opcodes = {
   NOTA: 0x44, //     0100 01 00 - NOT with regA
   NOTB: 0x45, //     0100 01 01 - NOT with regB
   SHLA: 0x54, //     0101 01 00 - Shift Left with regA
-  SHLB: 0x55, //     0101 01 - Shift Left with regB
+  SHLB: 0x55, //     0101 01 01 - Shift Left with regB
   SHRA: 0x64, //     0110 01 00 - Shift Right with regA
   SHRB: 0x65, //     0110 01 01 - Shift Right with regB
   ADDA: 0x74, //     0111 01 00 - Add with regA
@@ -70,8 +70,8 @@ export const opcodes = {
   JZB: 0x19, //      0001 10 01 - Conditional Jump if regB == 0
 
   SETBP: 0x0C, //    0000 11 00 - Set base pointer
-  PUSH: 0x1C, //     0001 11 00 - Push to stack
-  POP: 0x2C, //      0010 11 00 - Pop from stack
+  PUSHA: 0x1C, //     0001 11 00 - Push to stack
+  POPA: 0x2C, //      0010 11 00 - Pop from stack
   CALL: 0x3C, //     0011 11 00 - Call function
   RET: 0x4C, //      0100 11 00 - Return from function
   LOADABP: 0x5C, //  0101 11 00 - Load (base pointer + address) to regA
@@ -106,8 +106,8 @@ export const opcodesParams = {
   [opcodes.JZA]: 1,
   [opcodes.JZB]: 1,
   [opcodes.SETBP]: 1,
-  [opcodes.PUSH]: 1,
-  [opcodes.POP]: 1,
+  [opcodes.PUSHA]: 0,
+  [opcodes.POPA]: 0,
   [opcodes.CALL]: 1,
   [opcodes.RET]: 0,
   [opcodes.LOADABP]: 1,

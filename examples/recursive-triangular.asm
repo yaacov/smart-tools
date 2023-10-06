@@ -4,9 +4,10 @@
 SETBP STACK
 
 ; Call recursive triangular method
-PUSH NUM1
+LOADA NUM1
+PUSHA
 CALL FUNC
-POP TEMP ; clear stack
+POPA ; clear stack into regA
 
 ; Move result from register B to memory
 STOREB RESULT
@@ -40,9 +41,9 @@ FUNC:
     STOREA TEMP
 
     ; Call recursively with num - 1 
-    PUSH TEMP
+    PUSHA
     CALL FUNC
-    POP  TEMP ; clear stack
+    POPA ; clear stack into regA
 RET: RET
 
 ; Start of stack

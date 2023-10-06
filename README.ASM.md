@@ -57,8 +57,8 @@ Here's a list of available opcodes in the SMART Assembly language:
 
 ### Stack Commands
 
-- `PUSH <label>`: Push the value from a memory location onto the stack.
-- `POP <label>`: Pop the top value from the stack into a memory location.
+- `PUSHA`: Push the value from register A onto the stack.
+- `POPA`: Pop the top value from the stack into register A.
 - `CALL <label>`: Call a subroutine.
 - `RET`: Return from a subroutine.
 - `SETBP <label>`: Set the Base Pointer for stack operations.
@@ -106,7 +106,6 @@ SETBP STACK
 ; rest of your program code;
 ; ...
 
-
 ; start of stack memory
 STACK:
 ; make sure to leave this memory empty for the stack to grow into it
@@ -146,11 +145,15 @@ This example uses the stack to swap two numbers:
 SETBP STACK ; Init the stack pointer (base pointer)
 
 ; Push the pop to swap NUM1 with NUM2
-PUSH NUM1
-PUSH NUM2
+LOADA NUM1
+PUSHA
+LOADA NUM2
+PUSHA
 
-POP NUM1
-POP NUM2
+POPA
+STOREA NUM1
+POPA
+STOREA NUM2
 
 END ; End program
 

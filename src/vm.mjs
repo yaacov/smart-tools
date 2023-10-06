@@ -68,8 +68,8 @@ class VM {
 
       // Stack operations
       [opcodes.SETBP]: () => this.sp = address,
-      [opcodes.PUSH]: () => this.push(this.memory[address]),
-      [opcodes.POP]: () => this.memory[address] = this.pop(),
+      [opcodes.PUSHA]: () => this.push(this.registerA),
+      [opcodes.POPA]: () => this.registerA = this.pop(),
       [opcodes.CALL]: () => { this.push(this.pc); this.pc = address; },
       [opcodes.RET]: () => this.pc = this.pop(),
       [opcodes.LOADABP]: () => this.registerA = this.memory[(bp - address) & 0xff],
