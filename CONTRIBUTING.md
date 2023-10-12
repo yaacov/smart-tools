@@ -49,13 +49,11 @@ If you’re working with container images, use the following commands to build a
 
 Build the Container Image
 ```bash
-Copy code
 podman build -t quay.io/yaacov/smart-tools .
 ```
 
 Run the Container Image
 ```bash
-Copy code
 podman run -it quay.io/yaacov/smart-tools
 ```
 
